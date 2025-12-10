@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenSim Kassenbuchhaltung - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏦 OpenSim Kassenbuchhaltung</h1>
+            <p class="subtitle">Money Accounting Dashboard</p>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
+            <button class="tab" onclick="showTab('users')">👥 Benutzer</button>
+            <button class="tab" onclick="showTab('transactions')">💰 Transaktionen</button>
+            <button class="tab" onclick="showTab('reports')">📈 Berichte</button>
+            <button class="tab" onclick="showTab('groups')">👨‍👩‍👧‍👦 Gruppen</button>
+        </nav>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard-tab" class="tab-content active">
+            <div class="section-header">
+                <h2>Übersicht</h2>
+                <div>
+                    <button onclick="loadDashboard()" class="btn-secondary">🔄 Aktualisieren</button>
+                    <span id="lastUpdate" class="text-muted"></span>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-value" id="totalUsers">-</div>
+                    <div class="stat-label">Gesamt Benutzer</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✓</div>
+                    <div class="stat-value" id="activeUsers">-</div>
+                    <div class="stat-label">Aktive Benutzer (24h)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-value" id="totalBalance">-</div>
+                    <div class="stat-label">Gesamt Guthaben</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value" id="todayTransactions">-</div>
+                    <div class="stat-label">Transaktionen (24h)</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Letzte Transaktionen</h3>
+                <div id="recentTransactions" class="table-container">
+                    <p class="loading">Lade Daten...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Tab -->
+        <div id="users-tab" class="tab-content">
+            <h2>Benutzer Verwaltung</h2>
+            <div class="search-box">
+                <input type="text" id="userSearch" placeholder="Suche Benutzer nach Name oder UUID..." onkeyup="filterUsers()">
+                <button onclick="loadUsers()" class="btn-primary">🔍 Suche starten</button>
+            </div>
+            <div class="stats-summary">
+                <span id="userCount">Gesamt: <strong>-</strong></span>
+                <span id="activeCount">Aktive: <strong>-</strong></span>
+                <span id="totalUserBalance">Gesamtguthaben: <strong>-</strong></span>
+            </div>
+            <div id="usersList" class="table-container">
+                <p class="loading">Lade Benutzer...</p>
+            </div>
+        </div>
+
+        <!-- Transactions Tab -->
+        <div id="transactions-tab" class="tab-content">
+            <h2>Transaktionen</h2>
+            <div class="filters">
+                <input type="text" id="txUserIdFilter" placeholder="Benutzer ID">
+                <input type="date" id="txStartDate">
+                <input type="date" id="txEndDate">
+                <select id="txTypeFilter">
+                    <option value="">Alle Typen</option>
+                    <option value="0">Einzahlung</option>
+                    <option value="1">Auszahlung</option>
+                    <option value="2">Überweisung</option>
+                    <option value="3">Gruppenauszahlung</option>
+                    <option value="4">Kauf</option>
+                    <option value="5">Verkauf</option>
+                    <option value="6">Gebühr</option>
+                </select>
+                <button onclick="loadTransactions()">🔍 Suchen</button>
+            </div>
+            <div id="transactionsList" class="table-container">
+                <p class="loading">Lade Transaktionen...</p>
+            </div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div id="reports-tab" class="tab-content">
+            <h2>Finanzberichte</h2>
+            <div class="filters">
+                <input type="date" id="reportStartDate">
+                <input type="date" id="reportEndDate">
+                <button onclick="loadFinancialReport()">📊 Bericht generieren</button>
+            </div>
+            <div id="reportContainer">
+                <p class="info">Wählen Sie einen Zeitraum und klicken Sie auf "Bericht generieren"</p>
+            </div>
+        </div>
+
+        <!-- Groups Tab -->
+        <div id="groups-tab" class="tab-content">
+            <h2>Gruppen Accounts</h2>
+            <div id="groupsList" class="table-container">
+                <p class="loading">Lade Gruppen...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
