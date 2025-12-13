@@ -1,0 +1,12 @@
+[Startup]
+    ; Port für den Example Server Web Interface
+    ; Default: 9000
+
+[ExampleServer]
+    ; Port für das Web Interface
+    Port = 9000
+    
+[Network]
+    ; Hostname oder IP-Adresse
+    ; Default: localhost
+    HostName = "localhost"
