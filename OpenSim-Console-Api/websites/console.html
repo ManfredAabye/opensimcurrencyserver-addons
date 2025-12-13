@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenSim Console API</title>
+    <link rel="stylesheet" href="/consolestyle.css">
+</head>
+<body>
+    <!-- Login Section -->
+    <div id="loginSection" class="login-container">
+        <div class="login-box">
+            <h1>🖥️ OpenSim Console API</h1>
+            <p class="subtitle">Secure Remote Console Access</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required autofocus>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <button type="submit" class="btn-primary">Login</button>
+            </form>
+            
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+            
+            <div class="login-footer">
+                <p>Default credentials: admin / admin123</p>
+                <p class="version">v1.0.0 - OpenSim Console API</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Console Section -->
+    <div id="consoleSection" class="console-container" style="display: none;">
+        <div class="console-header">
+            <h1>🖥️ OpenSim Console</h1>
+            <div class="header-actions">
+                <span id="connectionStatus" class="status-indicator"></span>
+                <button id="logoutBtn" class="btn-secondary">Logout</button>
+            </div>
+        </div>
+
+        <div class="console-main">
+            <!-- Command Sidebar -->
+            <div id="commandSidebar" class="command-sidebar">
+                <div class="sidebar-loading">
+                    <h3>📋 Available Commands</h3>
+                    <p>Loading commands...</p>
+                </div>
+            </div>
+
+            <!-- Console Area -->
+            <div class="console-area">
+                <div id="consoleOutput" class="console-output">
+                    <div class="console-line system">
+                        <span class="timestamp">[System]</span>
+                        <span>OpenSim Console API - Web Interface</span>
+                    </div>
+                    <div class="console-line system">
+                        <span class="timestamp">[Info]</span>
+                        <span>Type 'help' for a list of available commands</span>
+                    </div>
+                </div>
+
+                <div id="commandSuggestions" class="command-suggestions"></div>
+
+                <div class="console-input-area">
+                    <label for="commandInput" class="input-label">Command:</label>
+                    <div class="input-group">
+                        <span class="input-prompt">></span>
+                        <input 
+                            type="text" 
+                            id="commandInput" 
+                            placeholder="Enter OpenSim command (e.g., show regions, show users)" 
+                            autocomplete="off"
+                            spellcheck="false">
+                        <button id="sendCommand" class="btn-primary">Send</button>
+                        <button id="clearConsole" class="btn-secondary">Clear</button>
+                    </div>
+                    <div class="input-hints">
+                        <kbd>Enter</kbd> to send | <kbd>↑</kbd><kbd>↓</kbd> for history | <kbd>Tab</kbd> to autocomplete
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Panel -->
+        <div class="info-panel">
+            <div class="info-section">
+                <h4>Quick Commands</h4>
+                <ul class="quick-commands">
+                    <li><code>help</code> - Show all commands</li>
+                    <li><code>show regions</code> - List all regions</li>
+                    <li><code>show users</code> - Show connected users</li>
+                    <li><code>show stats</code> - Server statistics</li>
+                    <li><code>show version</code> - Server version</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h4>Usage Tips</h4>
+                <ul class="category-list">
+                    <li>🖱️ <strong>Click</strong> commands to insert</li>
+                    <li>⌨️ Use <kbd>Tab</kbd> for autocomplete</li>
+                    <li>📜 <kbd>↑</kbd><kbd>↓</kbd> browse history</li>
+                    <li>📋 Categories are collapsible</li>
+                    <li>ℹ️ Hover for descriptions</li>
+                </ul>
+            </div>
+
+            <div class="info-section">
+                <h4>Security</h4>
+                <p class="info-text">
+                    ✓ Session-based authentication<br>
+                    ✓ Rate limiting protection<br>
+                    ✓ Command injection prevention<br>
+                    ✓ Activity logging
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/console.js"></script>
+</body>
+</html>

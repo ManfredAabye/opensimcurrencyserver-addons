@@ -1,0 +1,567 @@
+/*
+ * OpenSim Console API - Stylesheet
+ * Modern, responsive design for console interface
+ */
+
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --success-color: #27ae60;
+    --error-color: #e74c3c;
+    --warning-color: #f39c12;
+    --bg-color: #1a1a1a;
+    --console-bg: #0a0a0a;
+    --text-color: #e0e0e0;
+    --text-muted: #888;
+    --border-color: #333;
+    --shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+/* Login Section */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.login-box {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: var(--shadow);
+}
+
+.login-box h1 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 2em;
+}
+
+.subtitle {
+    text-align: center;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    color: var(--text-color);
+    font-size: 14px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.btn-primary, .btn-secondary {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: var(--accent-color);
+    color: white;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-color);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.error-message {
+    background: var(--error-color);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.login-footer {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.version {
+    margin-top: 10px;
+}
+
+/* Console Section */
+.console-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: var(--bg-color);
+}
+
+.console-header {
+    background: var(--primary-color);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--accent-color);
+}
+
+.console-header h1 {
+    font-size: 1.5em;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--success-color);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.console-main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Command Sidebar */
+.command-sidebar {
+    width: 250px;
+    background: var(--secondary-color);
+    border-right: 1px solid var(--border-color);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.command-sidebar h3 {
+    margin-bottom: 15px;
+    color: var(--accent-color);
+}
+
+.command-category {
+    margin-bottom: 20px;
+}
+
+.command-category h4 {
+    font-size: 0.9em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.command-category ul {
+    list-style: none;
+}
+
+.command-category li {
+    padding: 5px 10px;
+    margin-bottom: 3px;
+    border-radius: 3px;
+    font-size: 0.85em;
+    cursor: pointer;
+}
+
+.command-category li.enabled {
+    color: var(--text-color);
+}
+
+.command-category li.enabled:hover {
+    background: rgba(52, 152, 219, 0.2);
+}
+
+.command-category li.disabled {
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+
+/* Console Area */
+.console-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--console-bg);
+}
+
+.console-output {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.console-line {
+    margin-bottom: 5px;
+    word-wrap: break-word;
+}
+
+.console-line.command {
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.console-line.output {
+    color: var(--text-color);
+}
+
+.console-line.error {
+    color: var(--error-color);
+}
+
+.console-line.system {
+    color: var(--success-color);
+}
+
+.timestamp {
+    color: var(--text-muted);
+    font-size: 0.85em;
+    margin-right: 10px;
+}
+
+/* Command Suggestions */
+.command-suggestions {
+    background: rgba(0, 0, 0, 0.8);
+    border-top: 1px solid var(--border-color);
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.suggestion {
+    padding: 8px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.suggestion:hover {
+    background: var(--accent-color);
+}
+
+/* Command Sidebar */
+.command-sidebar {
+    width: 280px;
+    background: var(--secondary-color);
+    border-right: 1px solid var(--border-color);
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.commands-header {
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.commands-header h3 {
+    color: var(--accent-color);
+    margin-bottom: 5px;
+    font-size: 1.1em;
+}
+
+.command-count {
+    font-size: 0.8em;
+    color: var(--text-muted);
+}
+
+.sidebar-loading {
+    text-align: center;
+    padding: 20px;
+}
+
+.sidebar-loading h3 {
+    color: var(--accent-color);
+    margin-bottom: 10px;
+}
+
+.command-category {
+    margin-bottom: 15px;
+}
+
+.category-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: rgba(52, 152, 219, 0.1);
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.category-header:hover {
+    background: rgba(52, 152, 219, 0.2);
+}
+
+.category-icon {
+    font-size: 0.8em;
+    color: var(--accent-color);
+    transition: transform 0.2s;
+}
+
+.category-header h4 {
+    flex: 1;
+    font-size: 0.9em;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.category-badge {
+    background: var(--accent-color);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.75em;
+    font-weight: bold;
+}
+
+.category-commands {
+    list-style: none;
+    margin-top: 5px;
+    padding-left: 10px;
+}
+
+.category-commands li {
+    padding: 6px 8px;
+    margin-bottom: 3px;
+    border-left: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.85em;
+}
+
+.category-commands li:hover {
+    border-left-color: var(--accent-color);
+    background: rgba(52, 152, 219, 0.1);
+    padding-left: 12px;
+}
+
+.category-commands li.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.category-commands li.disabled:hover {
+    background: none;
+    padding-left: 8px;
+}
+
+.cmd-name {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    color: var(--accent-color);
+    display: block;
+    margin-bottom: 2px;
+}
+
+.cmd-desc {
+    font-size: 0.85em;
+    color: var(--text-muted);
+    display: block;
+}
+
+/* Console Input Area */
+.console-input-area {
+    background: var(--secondary-color);
+    border-top: 2px solid var(--border-color);
+    padding: 20px;
+}
+
+.input-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.input-prompt {
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#commandInput {
+    flex: 1;
+    padding: 12px;
+    background: var(--console-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    color: var(--text-color);
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 14px;
+}
+
+#commandInput:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.input-hints {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.input-hints kbd {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: monospace;
+}
+
+/* Info Panel */
+.info-panel {
+    width: 300px;
+    background: var(--secondary-color);
+    border-left: 1px solid var(--border-color);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.info-section {
+    margin-bottom: 25px;
+}
+
+.info-section h4 {
+    color: var(--accent-color);
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+
+.quick-commands, .category-list {
+    list-style: none;
+}
+
+.quick-commands li {
+    margin-bottom: 8px;
+    font-size: 0.9em;
+}
+
+.quick-commands code {
+    background: rgba(52, 152, 219, 0.2);
+    padding: 2px 6px;
+    border-radius: 3px;
+    color: var(--accent-color);
+    font-family: monospace;
+}
+
+.category-list li {
+    margin-bottom: 8px;
+    font-size: 0.85em;
+}
+
+.info-text {
+    font-size: 0.85em;
+    line-height: 1.8;
+    color: var(--text-muted);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--console-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .info-panel {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .command-sidebar {
+        width: 200px;
+    }
+    
+    .console-header h1 {
+        font-size: 1.2em;
+    }
+    
+    .input-group {
+        flex-wrap: wrap;
+    }
+    
+    #commandInput {
+        flex-basis: 100%;
+    }
+}

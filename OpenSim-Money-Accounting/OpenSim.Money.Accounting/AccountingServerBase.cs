@@ -122,9 +122,9 @@ namespace OpenSim.Money.Accounting
         private void SetupHandlers()
         {
             // Static files (HTML, CSS, JS)
-            m_httpServer.AddStreamHandler(new StaticFileHandler("/", "webseiten/index.html", "text/html"));
-            m_httpServer.AddStreamHandler(new StaticFileHandler("/style.css", "webseiten/style.css", "text/css"));
-            m_httpServer.AddStreamHandler(new StaticFileHandler("/app.js", "webseiten/app.js", "application/javascript"));
+            m_httpServer.AddStreamHandler(new StaticFileHandler("/", "websites/accounting.html", "text/html"));
+            m_httpServer.AddStreamHandler(new StaticFileHandler("/accountingstyle.css", "websites/accountingstyle.css", "text/css"));
+            m_httpServer.AddStreamHandler(new StaticFileHandler("/app.js", "websites/app.js", "application/javascript"));
 
             // API endpoints (beide GET und POST werden vom selben Handler verarbeitet)
             m_httpServer.AddStreamHandler(new AccountingApiHandler(m_accountingService, "GET", "/api/balance"));

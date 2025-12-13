@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+    <Project name="OpenSim.Addon.Example" path="addon-modules/OpenSim-Addon-Example/OpenSim.Addon.Example" type="Exe">
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../../bin/</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+        </Options>
+      </Configuration>
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../../bin/</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+        </Options>
+      </Configuration>
+
+      <ReferencePath>../../../bin/</ReferencePath>
+      
+      <Reference name="Mono.Security.dll" path="../../../bin/"/>
+      <Reference name="Nini" path="../../../bin/"/>      
+      <Reference name="log4net" path="../../../bin/"/>
+      
+      <Reference name="OpenMetaverseTypes" path="../../../bin/"/>
+      <Reference name="OpenMetaverse.StructuredData" path="../../../bin/"/>
+      
+      <Reference name="OpenSim.Framework"/>
+      <Reference name="OpenSim.Framework.Console"/>
+      <Reference name="OpenSim.Framework.Servers"/>
+      <Reference name="OpenSim.Framework.Servers.HttpServer"/>
+      <Reference name="OpenSim.Server.Base"/>
+
+      <Files>
+        <Match pattern="*.cs" recurse="true">
+          <Exclude name="obj" pattern="obj"/>
+          <Exclude name="Tests" pattern="Tests"/>
+          <Exclude name="Properties" pattern="Properties"/>
+        </Match>
+      </Files>
+    </Project>
