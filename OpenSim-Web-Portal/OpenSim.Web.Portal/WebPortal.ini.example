@@ -1,0 +1,51 @@
+[WebPortal]
+    ; Port für das Web Portal
+    ; Standard: 8100
+    ; WICHTIG: Port 9000 wird von OpenSim verwendet!
+    ;          Port 8002 wird von Robust verwendet!
+    ;          Port 8008 wird von MoneyServer verwendet!
+    ;          Port 8080 wird von Console API verwendet!
+    Port = 8100
+
+    ; Template Verzeichnis
+    ; Standard: portal/templates
+    ; TemplatePath = portal/templates
+
+    ; CSS Verzeichnis  
+    ; Standard: portal/css
+    ; CSSPath = portal/css
+
+    ; Grid Name für Anzeige
+    ; GridName = My OpenSim Grid
+
+    ; Login URI für Viewer-Verbindungen
+    ; LoginURI = http://localhost:8002
+
+; [Database]
+    ; Datenbankverbindung (für zukünftige Features)
+    ; ConnectionString = "Data Source=localhost;Database=opensim;User ID=opensim;Password=***;"
+
+; [Email]
+    ; E-Mail Konfiguration für Passwort-Reset (zukünftig)
+    ; SMTPServer = smtp.example.com
+    ; SMTPPort = 587
+    ; SMTPUsername = noreply@example.com
+    ; SMTPPassword = ***
+    ; FromAddress = noreply@example.com
+    ; FromName = OpenSim Web Portal
+
+; [Security]
+    ; Session Timeout in Minuten
+    ; SessionTimeout = 30
+    
+    ; Password Hash Algorithm (SHA256, SHA512)
+    ; PasswordAlgorithm = SHA256
+    
+    ; Require Email Verification
+    ; RequireEmailVerification = true
+
+; [Features]
+    ; Aktiviere/Deaktiviere Features
+    ; AllowRegistration = true
+    ; AllowPasswordReset = true
+    ; ShowStatistics = true

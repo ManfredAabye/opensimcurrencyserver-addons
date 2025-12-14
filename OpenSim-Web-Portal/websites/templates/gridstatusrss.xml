@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>{{ GridName }} - Grid Status</title>
+  <link>{{ LoginURI }}</link>
+  <description>Aktueller Status und Statistiken von {{ GridName }}</description>
+  <language>de</language>
+  <lastBuildDate>{{ CurrentDateTime }}</lastBuildDate>
+  <atom:link href="{{ LoginURI }}/gridstatusrss" rel="self" type="application/rss+xml" />
+  <ttl>5</ttl>
+
+  <item>
+    <title>✅ Grid ist online</title>
+    <link>{{ LoginURI }}/gridstatus</link>
+    <description>
+      {{ GridName }} ist online und verfügbar. 
+      Alle Dienste laufen normal. 
+      Aktuell sind {{ UsersInworld }} Nutzer online.
+    </description>
+    <pubDate>{{ CurrentDateTime }}</pubDate>
+    <guid isPermaLink="false">gridstatus-{{ Timestamp }}</guid>
+  </item>
+
+  <item>
+    <title>📊 Aktuelle Grid-Statistiken</title>
+    <link>{{ LoginURI }}/gridstatus</link>
+    <description>
+      Online: {{ UsersInworld }} Nutzer | 
+      Regionen: {{ RegionsTotal }} | 
+      Registrierte Nutzer: {{ UsersTotal }} | 
+      Aktive Nutzer ({{ UsersActivePeriod }} Tage): {{ UsersActive }}
+    </description>
+    <pubDate>{{ CurrentDateTime }}</pubDate>
+    <guid isPermaLink="false">stats-{{ Timestamp }}</guid>
+  </item>
+
+  <item>
+    <title>⚙️ Dienste-Status</title>
+    <link>{{ LoginURI }}/gridstatus</link>
+    <description>
+      Login Service: Online | 
+      Grid Service: Online | 
+      Asset Service: Online | 
+      Economy Service: Online | 
+      Web Portal: Online
+    </description>
+    <pubDate>{{ CurrentDateTime }}</pubDate>
+    <guid isPermaLink="false">services-{{ Timestamp }}</guid>
+  </item>
+
+  <item>
+    <title>ℹ️ System-Informationen</title>
+    <link>{{ LoginURI }}/gridstatus</link>
+    <description>
+      Version: OpenSimulator {{ Version }} | 
+      Uptime: {{ Uptime }} | 
+      Login URI: {{ LoginURI }}
+    </description>
+    <pubDate>{{ CurrentDateTime }}</pubDate>
+    <guid isPermaLink="false">sysinfo-{{ Timestamp }}</guid>
+  </item>
+
+  <item>
+    <title>🌐 {{ GridName }} - Willkommen</title>
+    <link>{{ LoginURI }}</link>
+    <description>
+      Entdecken Sie unsere virtuelle Welt. 
+      Erstellen Sie einen kostenlosen Account und starten Sie Ihr Abenteuer in {{ GridName }}!
+    </description>
+    <pubDate>{{ CurrentDateTime }}</pubDate>
+    <guid isPermaLink="false">welcome-{{ Timestamp }}</guid>
+  </item>
+
+</channel>
+</rss>

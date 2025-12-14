@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suche - {{ GridName }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-dark text-white">
+
+    <!-- Header -->
+    <header class="bg-gradient py-3 text-center" style="background: linear-gradient(135deg, #ff6600 0%, #ff9933 100%);">
+        <h1 class="h3 fw-bold text-white mb-0">Suche - {{ GridName }}</h1>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                
+                <!-- Search Box -->
+                <div class="card bg-dark border-warning shadow-lg mb-4">
+                    <div class="card-body p-5">
+                        
+                        <div class="text-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="text-warning mb-3" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                            </svg>
+                            <h2 class="text-warning mb-2">Durchsuchen Sie {{ GridName }}</h2>
+                            <p class="text-white-50">Finden Sie Orte, Personen und Events in unserer virtuellen Welt</p>
+                        </div>
+
+                        <!-- Search Form -->
+                        <form method="GET" action="/search" class="mb-4">
+                            <div class="input-group input-group-lg mb-3">
+                                <input type="text" 
+                                       class="form-control bg-secondary text-white border-warning" 
+                                       name="q" 
+                                       placeholder="Suchbegriff eingeben..."
+                                       value="{{ SearchQuery }}"
+                                       required>
+                                <button type="submit" class="btn btn-warning">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                    </svg>
+                                    Suchen
+                                </button>
+                            </div>
+                            
+                            <!-- Search Filters -->
+                            <div class="btn-group w-100 mb-3" role="group">
+                                <input type="radio" class="btn-check" name="type" id="all" value="all" checked>
+                                <label class="btn btn-outline-warning" for="all">Alles</label>
+                                
+                                <input type="radio" class="btn-check" name="type" id="places" value="places">
+                                <label class="btn btn-outline-warning" for="places">Orte</label>
+                                
+                                <input type="radio" class="btn-check" name="type" id="people" value="people">
+                                <label class="btn btn-outline-warning" for="people">Personen</label>
+                                
+                                <input type="radio" class="btn-check" name="type" id="events" value="events">
+                                <label class="btn btn-outline-warning" for="events">Events</label>
+                                
+                                <input type="radio" class="btn-check" name="type" id="groups" value="groups">
+                                <label class="btn btn-outline-warning" for="groups">Gruppen</label>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
+                <!-- Search Results (Placeholder) -->
+                <div class="card bg-dark border-warning shadow-lg mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="mb-0">🔍 Suchergebnisse</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        
+                        <!-- No Results / Start Message -->
+                        <div class="text-center py-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="text-warning mb-3" viewBox="0 0 16 16">
+                                <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5zm1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0zM1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5z"/>
+                            </svg>
+                            <p class="text-white-50 mb-0">Geben Sie einen Suchbegriff ein, um Ergebnisse zu sehen</p>
+                        </div>
+
+                        <!-- Example Results (when search is active) -->
+                        <!-- Uncomment this section when implementing actual search -->
+                        <!--
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item bg-dark border-secondary">
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="text-warning mb-1">Region Name</h6>
+                                        <p class="text-white-50 small mb-0">Description of the region</p>
+                                    </div>
+                                    <a href="#" class="btn btn-warning btn-sm">Besuchen</a>
+                                </div>
+                            </div>
+                        </div>
+                        -->
+
+                    </div>
+                </div>
+
+                <!-- Quick Search Categories -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card bg-dark border-warning h-100 text-center">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="text-warning" viewBox="0 0 16 16">
+                                        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/>
+                                    </svg>
+                                </div>
+                                <h6 class="text-warning mb-2">Orte</h6>
+                                <p class="text-white-50 small mb-0">Regionen und Locations</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card bg-dark border-warning h-100 text-center">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="text-warning" viewBox="0 0 16 16">
+                                        <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                        <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+                                        <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+                                    </svg>
+                                </div>
+                                <h6 class="text-warning mb-2">Personen</h6>
+                                <p class="text-white-50 small mb-0">Nutzer und Avatare</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card bg-dark border-warning h-100 text-center">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="text-warning" viewBox="0 0 16 16">
+                                        <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+                                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+                                    </svg>
+                                </div>
+                                <h6 class="text-warning mb-2">Events</h6>
+                                <p class="text-white-50 small mb-0">Veranstaltungen</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card bg-dark border-warning h-100 text-center">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="text-warning" viewBox="0 0 16 16">
+                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                    </svg>
+                                </div>
+                                <h6 class="text-warning mb-2">Gruppen</h6>
+                                <p class="text-white-50 small mb-0">Communities</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Popular Searches -->
+                <div class="card bg-dark border-info shadow-lg">
+                    <div class="card-body p-4">
+                        <h5 class="text-info mb-3">🔥 Beliebte Suchen</h5>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a href="/search?q=Welcome" class="badge bg-secondary text-white text-decoration-none py-2 px-3">Welcome</a>
+                            <a href="/search?q=Shopping" class="badge bg-secondary text-white text-decoration-none py-2 px-3">Shopping</a>
+                            <a href="/search?q=Club" class="badge bg-secondary text-white text-decoration-none py-2 px-3">Club</a>
+                            <a href="/search?q=Beach" class="badge bg-secondary text-white text-decoration-none py-2 px-3">Beach</a>
+                            <a href="/search?q=Art" class="badge bg-secondary text-white text-decoration-none py-2 px-3">Art</a>
+                            <a href="/search?q=Music" class="badge bg-secondary text-white text-decoration-none py-2 px-3">Music</a>
+                            <a href="/search?q=Games" class="badge bg-secondary text-white text-decoration-none py-2 px-3">Games</a>
+                            <a href="/search?q=Events" class="badge bg-secondary text-white text-decoration-none py-2 px-3">Events</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient py-3 text-center mt-4" style="background: linear-gradient(135deg, #ff6600 0%, #ff9933 100%);">
+        <p class="mb-0 text-white small">&copy; 2025 {{ GridName }}</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

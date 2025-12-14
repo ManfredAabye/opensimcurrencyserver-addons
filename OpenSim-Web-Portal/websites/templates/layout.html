@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{GRID_NAME}} - Web Portal</title>
+    
+    <!-- Bootstrap 5.3.2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/portal/css/custom.css" rel="stylesheet">
+    
+    {{HEAD_EXTRA}}
+</head>
+<body class="d-flex flex-column min-vh-100">
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-globe"></i> {{GRID_NAME}}
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="bi bi-house"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/portal/about"><i class="bi bi-info-circle"></i> Über</a>
+                    </li>
+                    {{#IF_LOGGED_IN}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/portal/account"><i class="bi bi-person"></i> Account</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/portal/inventory"><i class="bi bi-box"></i> Inventar</a>
+                    </li>
+                    {{#IF_ADMIN}}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-gear"></i> Administration
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/portal/admin/users"><i class="bi bi-people"></i> Benutzer</a></li>
+                            <li><a class="dropdown-item" href="/portal/admin/console"><i class="bi bi-terminal"></i> Konsole</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/portal/admin/stats"><i class="bi bi-graph-up"></i> Statistiken</a></li>
+                        </ul>
+                    </li>
+                    {{/IF_ADMIN}}
+                    {{/IF_LOGGED_IN}}
+                </ul>
+                
+                <ul class="navbar-nav">
+                    {{#IF_LOGGED_IN}}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> {{USER_NAME}}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="/portal/account"><i class="bi bi-person"></i> Mein Account</a></li>
+                            <li><a class="dropdown-item" href="/portal/account/settings"><i class="bi bi-gear"></i> Einstellungen</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/portal/logout"><i class="bi bi-box-arrow-right"></i> Abmelden</a></li>
+                        </ul>
+                    </li>
+                    {{ELSE}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/portal/login"><i class="bi bi-box-arrow-in-right"></i> Anmelden</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/portal/register"><i class="bi bi-person-plus"></i> Registrieren</a>
+                    </li>
+                    {{/IF_LOGGED_IN}}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="flex-grow-1">
+        <div class="container-fluid py-4">
+            {{#ALERTS}}
+            <div class="alert alert-{{ALERT_TYPE}} alert-dismissible fade show" role="alert">
+                <i class="bi bi-{{ALERT_ICON}}"></i> {{ALERT_MESSAGE}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {{/ALERTS}}
+            
+            {{CONTENT}}
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-auto">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5><i class="bi bi-globe"></i> {{GRID_NAME}}</h5>
+                    <p class="text-muted">Powered by OpenSimulator</p>
+                </div>
+                <div class="col-md-4">
+                    <h6>Links</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/portal/about" class="text-light">Über uns</a></li>
+                        <li><a href="/portal/help" class="text-light">Hilfe</a></li>
+                        <li><a href="/portal/tos" class="text-light">Nutzungsbedingungen</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h6>Viewer Downloads</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="http://www.firestormviewer.org/" class="text-light" target="_blank">Firestorm</a></li>
+                        <li><a href="https://www.singularityviewer.org/" class="text-light" target="_blank">Singularity</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="bg-secondary">
+            <div class="text-center text-muted">
+                <small>© 2025 {{GRID_NAME}} | OpenSim Web Portal v1.0</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5.3.2 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="/portal/js/custom.js"></script>
+    
+    {{SCRIPT_EXTRA}}
+</body>
+</html>

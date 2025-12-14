@@ -1,0 +1,232 @@
+<!-- Inventory Page -->
+<div class="row">
+    <div class="col-12 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0"><i class="bi bi-box"></i> Mein Inventar</h4>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="refreshInventory()">
+                            <i class="bi bi-arrow-clockwise"></i> Aktualisieren
+                        </button>
+                        <button class="btn btn-success" onclick="uploadIAR()">
+                            <i class="bi bi-upload"></i> IAR Hochladen
+                        </button>
+                        <button class="btn btn-info" onclick="downloadIAR()">
+                            <i class="bi bi-download"></i> IAR Herunterladen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Inventory Tree -->
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h6 class="mb-0"><i class="bi bi-folder-tree"></i> Ordner</h6>
+            </div>
+            <div class="card-body" style="max-height: 600px; overflow-y: auto;">
+                <div class="inventory-tree">
+                    <div class="inventory-folder" onclick="toggleFolder(this)">
+                        <i class="bi bi-folder"></i> <strong>Mein Inventar</strong>
+                        <ul style="display: block;">
+                            <li class="inventory-item" onclick="selectFolder('animations')">
+                                <i class="bi bi-play-circle"></i> Animationen
+                            </li>
+                            <li class="inventory-item" onclick="selectFolder('body-parts')">
+                                <i class="bi bi-person"></i> Körperteile
+                            </li>
+                            <li class="inventory-item" onclick="selectFolder('clothing')">
+                                <i class="bi bi-bag"></i> Kleidung
+                            </li>
+                            <li class="inventory-item" onclick="selectFolder('gestures')">
+                                <i class="bi bi-hand-index"></i> Gesten
+                            </li>
+                            <li class="inventory-item" onclick="selectFolder('landmarks')">
+                                <i class="bi bi-pin-map"></i> Landmarken
+                            </li>
+                            <li class="inventory-item" onclick="selectFolder('notecards')">
+                                <i class="bi bi-file-text"></i> Notecards
+                            </li>
+                            <li class="inventory-item" onclick="selectFolder('objects')">
+                                <i class="bi bi-box"></i> Objekte
+                            </li>
+                            <li class="inventory-item" onclick="selectFolder('scripts')">
+                                <i class="bi bi-code"></i> Scripts
+                            </li>
+                            <li class="inventory-item" onclick="selectFolder('sounds')">
+                                <i class="bi bi-music-note"></i> Sounds
+                            </li>
+                            <li class="inventory-item" onclick="selectFolder('textures')">
+                                <i class="bi bi-image"></i> Texturen
+                            </li>
+                            <li class="inventory-item" onclick="selectFolder('trash')">
+                                <i class="bi bi-trash"></i> Papierkorb
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inventory Content -->
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                <h6 class="mb-0"><i class="bi bi-list"></i> Inhalt</h6>
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-light" onclick="createFolder()">
+                        <i class="bi bi-folder-plus"></i> Neuer Ordner
+                    </button>
+                    <button class="btn btn-light" onclick="deleteSelected()">
+                        <i class="bi bi-trash"></i> Löschen
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="max-height: 600px; overflow-y: auto;">
+                <div id="inventoryContent">
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i> Wähle einen Ordner aus der Liste links
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory Stats -->
+        <div class="card shadow mt-3">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-4">
+                        <i class="bi bi-box text-primary fs-3"></i>
+                        <h6 class="mt-2">Items</h6>
+                        <p class="mb-0"><strong id="itemCount">0</strong></p>
+                    </div>
+                    <div class="col-4">
+                        <i class="bi bi-folder text-success fs-3"></i>
+                        <h6 class="mt-2">Ordner</h6>
+                        <p class="mb-0"><strong id="folderCount">0</strong></p>
+                    </div>
+                    <div class="col-4">
+                        <i class="bi bi-hdd text-info fs-3"></i>
+                        <h6 class="mt-2">Größe</h6>
+                        <p class="mb-0"><strong id="inventorySize">0 MB</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upload IAR Modal -->
+<div class="modal fade" id="uploadModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-upload"></i> IAR Hochladen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="iarFile" class="form-label">IAR Datei auswählen</label>
+                    <input type="file" class="form-control" id="iarFile" accept=".iar,.zip">
+                </div>
+                <div class="alert alert-warning">
+                    <i class="bi bi-exclamation-triangle"></i> Das Hochladen überschreibt existierende Items!
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <button type="button" class="btn btn-primary" onclick="performUpload()">Hochladen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let selectedFolder = null;
+
+function toggleFolder(element) {
+    const ul = element.querySelector('ul');
+    const icon = element.querySelector('i');
+    
+    if (ul.style.display === 'none') {
+        ul.style.display = 'block';
+        icon.classList.remove('bi-folder');
+        icon.classList.add('bi-folder-open');
+    } else {
+        ul.style.display = 'none';
+        icon.classList.remove('bi-folder-open');
+        icon.classList.add('bi-folder');
+    }
+}
+
+function selectFolder(folderId) {
+    selectedFolder = folderId;
+    document.querySelectorAll('.inventory-item').forEach(item => {
+        item.classList.remove('selected');
+    });
+    event.currentTarget.classList.add('selected');
+    loadFolderContent(folderId);
+}
+
+function loadFolderContent(folderId) {
+    const content = document.getElementById('inventoryContent');
+    content.innerHTML = `
+        <div class="spinner-container">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Laden...</span>
+            </div>
+        </div>
+    `;
+    
+    // Simuliere Laden (später durch echten API-Call ersetzen)
+    setTimeout(() => {
+        content.innerHTML = `
+            <div class="alert alert-success">
+                <i class="bi bi-check-circle"></i> Ordner "${folderId}" geladen (Feature in Entwicklung)
+            </div>
+        `;
+    }, 500);
+}
+
+function refreshInventory() {
+    alert('Inventar wird aktualisiert... (Feature in Entwicklung)');
+}
+
+function uploadIAR() {
+    const modal = new bootstrap.Modal(document.getElementById('uploadModal'));
+    modal.show();
+}
+
+function downloadIAR() {
+    alert('IAR Download gestartet... (Feature in Entwicklung)');
+}
+
+function createFolder() {
+    const name = prompt('Name des neuen Ordners:');
+    if (name) {
+        alert('Ordner "' + name + '" erstellt (Feature in Entwicklung)');
+    }
+}
+
+function deleteSelected() {
+    if (confirm('Möchten Sie die ausgewählten Items wirklich löschen?')) {
+        alert('Items gelöscht (Feature in Entwicklung)');
+    }
+}
+
+function performUpload() {
+    const fileInput = document.getElementById('iarFile');
+    if (fileInput.files.length > 0) {
+        alert('Upload gestartet... (Feature in Entwicklung)');
+        bootstrap.Modal.getInstance(document.getElementById('uploadModal')).hide();
+    } else {
+        alert('Bitte wählen Sie eine Datei aus!');
+    }
+}
+</script>

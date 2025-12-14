@@ -1,0 +1,234 @@
+<!-- Admin Users Page -->
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0"><i class="bi bi-people"></i> Benutzerverwaltung</h4>
+                    <div class="btn-group">
+                        <button class="btn btn-success" onclick="createUser()">
+                            <i class="bi bi-person-plus"></i> Neuer Benutzer
+                        </button>
+                        <button class="btn btn-primary" onclick="refreshUsers()">
+                            <i class="bi bi-arrow-clockwise"></i> Aktualisieren
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Search and Filter -->
+<div class="row mb-3">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control" placeholder="Benutzer suchen..." id="searchInput" onkeyup="searchUsers()">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <select class="form-select" id="filterLevel" onchange="filterUsers()">
+                    <option value="all">Alle Level</option>
+                    <option value="0">User (Level 0)</option>
+                    <option value="100">Admin (Level 100)</option>
+                    <option value="200">God (Level 200)</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Table -->
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h6 class="mb-0"><i class="bi bi-table"></i> Benutzer-Liste</h6>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th width="40"><input type="checkbox" onclick="toggleAll(this)"></th>
+                                <th>Name</th>
+                                <th>E-Mail</th>
+                                <th>Level</th>
+                                <th>Erstellt</th>
+                                <th>Status</th>
+                                <th width="200">Aktionen</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody">
+                            <!-- Example Row -->
+                            <tr>
+                                <td><input type="checkbox" class="user-checkbox"></td>
+                                <td>
+                                    <i class="bi bi-person-circle text-primary"></i>
+                                    <strong>Admin User</strong>
+                                </td>
+                                <td>admin@example.com</td>
+                                <td><span class="badge bg-danger">Level 100</span></td>
+                                <td>2025-01-01</td>
+                                <td><span class="status-online">Online</span></td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-info" onclick="viewUser('admin')">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                        <button class="btn btn-warning" onclick="editUser('admin')">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-danger" onclick="deleteUser('admin')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="user-checkbox"></td>
+                                <td>
+                                    <i class="bi bi-person-circle text-success"></i>
+                                    <strong>Test User</strong>
+                                </td>
+                                <td>test@example.com</td>
+                                <td><span class="badge bg-primary">Level 0</span></td>
+                                <td>2025-12-01</td>
+                                <td><span class="status-offline">Offline</span></td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <button class="btn btn-info" onclick="viewUser('test')">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
+                                        <button class="btn btn-warning" onclick="editUser('test')">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button class="btn btn-danger" onclick="deleteUser('test')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <span class="text-muted">Zeige 2 von 2 Benutzern</span>
+                    </div>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-danger" onclick="deleteSelected()">
+                            <i class="bi bi-trash"></i> Ausgewählte löschen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Statistics -->
+<div class="row mt-3">
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-people text-primary" style="font-size: 3rem;"></i>
+                <h3 class="mt-2">2</h3>
+                <p class="text-muted mb-0">Gesamt Benutzer</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-person-check text-success" style="font-size: 3rem;"></i>
+                <h3 class="mt-2">1</h3>
+                <p class="text-muted mb-0">Online</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-person-plus text-info" style="font-size: 3rem;"></i>
+                <h3 class="mt-2">0</h3>
+                <p class="text-muted mb-0">Heute neu</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+                <i class="bi bi-shield-check text-warning" style="font-size: 3rem;"></i>
+                <h3 class="mt-2">1</h3>
+                <p class="text-muted mb-0">Admins</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleAll(checkbox) {
+    document.querySelectorAll('.user-checkbox').forEach(cb => {
+        cb.checked = checkbox.checked;
+    });
+}
+
+function searchUsers() {
+    const input = document.getElementById('searchInput').value.toLowerCase();
+    const rows = document.querySelectorAll('#userTableBody tr');
+    
+    rows.forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(input) ? '' : 'none';
+    });
+}
+
+function filterUsers() {
+    const level = document.getElementById('filterLevel').value;
+    alert('Filter nach Level ' + level + ' (Feature in Entwicklung)');
+}
+
+function refreshUsers() {
+    alert('Benutzerliste wird aktualisiert... (Feature in Entwicklung)');
+}
+
+function createUser() {
+    window.location.href = '/portal/register';
+}
+
+function viewUser(username) {
+    alert('Benutzer "' + username + '" anzeigen (Feature in Entwicklung)');
+}
+
+function editUser(username) {
+    alert('Benutzer "' + username + '" bearbeiten (Feature in Entwicklung)');
+}
+
+function deleteUser(username) {
+    if (confirm('Benutzer "' + username + '" wirklich löschen?')) {
+        alert('Benutzer gelöscht (Feature in Entwicklung)');
+    }
+}
+
+function deleteSelected() {
+    const checked = document.querySelectorAll('.user-checkbox:checked');
+    if (checked.length === 0) {
+        alert('Keine Benutzer ausgewählt!');
+        return;
+    }
+    
+    if (confirm('Wirklich ' + checked.length + ' Benutzer löschen?')) {
+        alert('Benutzer gelöscht (Feature in Entwicklung)');
+    }
+}
+</script>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Destination Guide - {{ GridName }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .region-box {
+            background: #1a1a1a;
+            border: 1px solid #ff6600;
+            border-radius: 4px;
+            padding: 8px 12px;
+            margin: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 200px;
+            max-width: 280px;
+        }
+        
+        .region-box img {
+            border-radius: 3px;
+            border: 1px solid #444;
+        }
+        
+        .region-box a {
+            text-decoration: none;
+            color: #ff6600;
+            font-size: 14px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .region-box a:hover {
+            color: #ff8833;
+        }
+        
+        .guide-container {
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 16px;
+        }
+        
+        .guide-section {
+            margin-bottom: 24px;
+        }
+        
+        .guide-section h3 {
+            background: linear-gradient(135deg, #ff6600 0%, #ff9933 100%);
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+        
+        .destinations-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+    </style>
+</head>
+<body class="bg-dark text-white">
+
+    <!-- Header -->
+    <header class="bg-gradient py-3 text-center" style="background: linear-gradient(135deg, #ff6600 0%, #ff9933 100%);">
+        <h1 class="h3 fw-bold text-white mb-0">Destination Guide - {{ GridName }}</h1>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container py-4">
+        <div class="card bg-dark border-warning shadow-lg">
+            <div class="card-body">
+                
+                <div class="guide-container">
+                    
+                    <!-- Top Destinations -->
+                    <div class="guide-section">
+                        <h3>⭐ Top Destinations</h3>
+                        <div class="destinations-row">
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🌍%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://alternatemetaverse.com:8002/Alternate%20Metaverse/342/357/64">Alternate Metaverse</a>
+                            </div>
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🌍%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://grid.wolfterritories.org:8002/Infinity%2011/874/298/23">Infinity 11</a>
+                            </div>
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🛍️%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://sciattisigrid.it:8002/SciattiShopClothes/115/238/23">SciattiShopClothes</a>
+                            </div>
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🏛️%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://alternatemetaverse.com:8002/Serrallo%20de%20Mogor/686/680/2005">Serrallo de Mogor</a>
+                            </div>
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🏰%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://hg.trianon-world.com:18002/Trianon%20Complex/135/119/23">Trianon Complex</a>
+                            </div>
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🎪%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://grid.wolfterritories.org:8002/OpenSim">OpenSim Worlds Fair</a>
+                            </div>
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🌍%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://os-metavers.fresh-projects.top:8002/Ground_Zero_X2000Y2002/123/310/2142">Ground Zero</a>
+                            </div>
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🎉%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://hg.sunlight-grid.com:80/Events%20Plaza/379/393/25">Events Plaza</a>
+                            </div>
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🎮%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://grid.avatarlife.com:8002/Hypergrid%20Games/3/201/23">Hypergrid Games</a>
+                            </div>
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🛍️%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://adult-life.de:8002/Shopping%20FUN/91/156/1613">Shopping FUN</a>
+                            </div>
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🏪%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://jogrid.net:8002/Shinobar%20Annex/146/118/23">Shinobar Annex</a>
+                            </div>
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🏖️%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://alternatemetaverse.com:8002/Skinny%20Dip%20Beach/214/215/32">Skinny Dip Beach</a>
+                            </div>
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🏙️%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://xenolandia.de:8002/Xenotown/541/159/22">Xenotown</a>
+                            </div>
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🛍️%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://sciattisigrid.it:8002/SciattiShopCenter/150/92/23">SciattiShopCenter</a>
+                            </div>
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🏬%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://littlebigcity.outworldz.net:8002/Little%20Big%20City%20Shopping%20Mall/937/435/23">Little Big City Mall</a>
+                            </div>
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🎭%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://grid.avatarlife.com:8002/Avatar%20Life/128/128/23">Avatar Life</a>
+                            </div>
+                            <div class="region-box">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect fill='%23333' width='32' height='32'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23ff6600' font-size='20'%3E🌍%3C/text%3E%3C/svg%3E" alt="" width="32" height="32">
+                                <a href="hop://grid.kitely.com:8002/Welcome">Kitely Welcome</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <!-- Back Button -->
+                <div class="text-center mt-4">
+                    <a href="/" class="btn btn-warning">← Zurück zur Startseite</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient py-3 text-center mt-4" style="background: linear-gradient(135deg, #ff6600 0%, #ff9933 100%);">
+        <p class="mb-0 text-white small">&copy; 2025 {{ GridName }}</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

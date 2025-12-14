@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avatar-Auswahl - {{ GridName }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .avatar-card {
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .avatar-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(255, 102, 0, 0.3);
+        }
+        .avatar-card.selected {
+            border-color: #ff6600;
+            box-shadow: 0 0 20px rgba(255, 102, 0, 0.5);
+        }
+        .avatar-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #2a2a2a;
+        }
+    </style>
+</head>
+<body class="bg-dark text-white">
+
+    <!-- Header -->
+    <header class="bg-gradient py-3 text-center" style="background: linear-gradient(135deg, #ff6600 0%, #ff9933 100%);">
+        <h1 class="h3 fw-bold text-white mb-0">Avatar-Auswahl - {{ GridName }}</h1>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                
+                <!-- Info Box -->
+                <div class="alert alert-info bg-dark border-info mb-4">
+                    <div class="d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="text-info me-3" viewBox="0 0 16 16">
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                            <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                        </svg>
+                        <div>
+                            <h6 class="text-info mb-1">Avatar-Picker</h6>
+                            <p class="text-white-50 small mb-0">Wählen Sie einen Avatar aus der Liste oder suchen Sie nach einem bestimmten Nutzer.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Box -->
+                <div class="card bg-dark border-warning shadow-lg mb-4">
+                    <div class="card-body p-4">
+                        <form method="GET" action="/avatars">
+                            <div class="input-group input-group-lg">
+                                <input type="text" 
+                                       class="form-control bg-secondary text-white border-warning" 
+                                       name="search" 
+                                       placeholder="Nach Avatar-Namen suchen..."
+                                       value="{{ SearchQuery }}">
+                                <button type="submit" class="btn btn-warning">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                    </svg>
+                                    Suchen
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Filter Options -->
+                <div class="card bg-dark border-warning shadow-lg mb-4">
+                    <div class="card-body p-3">
+                        <div class="d-flex gap-2 flex-wrap align-items-center">
+                            <span class="text-white-50 small me-2">Filter:</span>
+                            <button class="btn btn-sm btn-outline-warning active">Alle</button>
+                            <button class="btn btn-sm btn-outline-warning">Online</button>
+                            <button class="btn btn-sm btn-outline-warning">Freunde</button>
+                            <button class="btn btn-sm btn-outline-warning">Gruppen-Mitglieder</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Avatar Grid -->
+                <div class="card bg-dark border-warning shadow-lg mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="mb-0">👥 Avatare</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        
+                        <div class="row g-3">
+                            
+                            <!-- Avatar Card Example 1 -->
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="card bg-secondary border-warning avatar-card h-100" onclick="selectAvatar('user1')">
+                                    <div class="avatar-img">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="text-warning p-5" viewBox="0 0 16 16">
+                                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="card-body p-3">
+                                        <h6 class="text-warning mb-1">FirstName LastName</h6>
+                                        <p class="text-white-50 small mb-2">
+                                            <span class="badge bg-success">Online</span>
+                                        </p>
+                                        <p class="text-white-50 small mb-0">Region: Welcome Area</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Avatar Card Example 2 -->
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="card bg-secondary border-warning avatar-card h-100" onclick="selectAvatar('user2')">
+                                    <div class="avatar-img">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="text-warning p-5" viewBox="0 0 16 16">
+                                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="card-body p-3">
+                                        <h6 class="text-warning mb-1">Avatar Resident</h6>
+                                        <p class="text-white-50 small mb-2">
+                                            <span class="badge bg-secondary">Offline</span>
+                                        </p>
+                                        <p class="text-white-50 small mb-0">Zuletzt online: Heute</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Avatar Card Example 3 -->
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="card bg-secondary border-warning avatar-card h-100" onclick="selectAvatar('user3')">
+                                    <div class="avatar-img">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="text-warning p-5" viewBox="0 0 16 16">
+                                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="card-body p-3">
+                                        <h6 class="text-warning mb-1">User Name</h6>
+                                        <p class="text-white-50 small mb-2">
+                                            <span class="badge bg-success">Online</span>
+                                        </p>
+                                        <p class="text-white-50 small mb-0">Region: Shopping Mall</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Avatar Card Example 4 -->
+                            <div class="col-lg-3 col-md-4 col-sm-6">
+                                <div class="card bg-secondary border-warning avatar-card h-100" onclick="selectAvatar('user4')">
+                                    <div class="avatar-img">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="text-warning p-5" viewBox="0 0 16 16">
+                                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="card-body p-3">
+                                        <h6 class="text-warning mb-1">Demo Avatar</h6>
+                                        <p class="text-white-50 small mb-2">
+                                            <span class="badge bg-secondary">Offline</span>
+                                        </p>
+                                        <p class="text-white-50 small mb-0">Zuletzt online: Gestern</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- More avatars can be added here dynamically -->
+
+                        </div>
+
+                        <!-- Pagination -->
+                        <nav aria-label="Avatar pagination" class="mt-4">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item disabled">
+                                    <a class="page-link bg-secondary text-white border-warning" href="#" tabindex="-1">Zurück</a>
+                                </li>
+                                <li class="page-item active">
+                                    <a class="page-link bg-warning text-dark border-warning" href="#">1</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link bg-secondary text-white border-warning" href="#">2</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link bg-secondary text-white border-warning" href="#">3</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link bg-secondary text-white border-warning" href="#">Weiter</a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                </div>
+
+                <!-- Selected Avatar Info -->
+                <div id="selectedAvatarInfo" class="card bg-dark border-success shadow-lg" style="display: none;">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="text-success mb-2">✓ Avatar ausgewählt</h5>
+                                <p class="text-white mb-0" id="selectedAvatarName">FirstName LastName</p>
+                            </div>
+                            <div>
+                                <button class="btn btn-success me-2" onclick="confirmSelection()">Bestätigen</button>
+                                <button class="btn btn-outline-warning" onclick="clearSelection()">Abbrechen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient py-3 text-center mt-4" style="background: linear-gradient(135deg, #ff6600 0%, #ff9933 100%);">
+        <p class="mb-0 text-white small">&copy; 2025 {{ GridName }}</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let selectedAvatar = null;
+
+        function selectAvatar(userId) {
+            // Clear previous selection
+            document.querySelectorAll('.avatar-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            // Select new avatar
+            event.currentTarget.classList.add('selected');
+            selectedAvatar = userId;
+
+            // Show selected avatar info
+            document.getElementById('selectedAvatarInfo').style.display = 'block';
+            
+            // Update selected avatar name (in real implementation, fetch from data)
+            const nameElement = event.currentTarget.querySelector('h6');
+            document.getElementById('selectedAvatarName').textContent = nameElement.textContent;
+        }
+
+        function clearSelection() {
+            document.querySelectorAll('.avatar-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.getElementById('selectedAvatarInfo').style.display = 'none';
+            selectedAvatar = null;
+        }
+
+        function confirmSelection() {
+            if (selectedAvatar) {
+                // In real implementation, send selection to parent or callback
+                alert('Avatar ausgewählt: ' + selectedAvatar);
+                // window.parent.postMessage({type: 'avatar-selected', avatarId: selectedAvatar}, '*');
+            }
+        }
+    </script>
+</body>
+</html>

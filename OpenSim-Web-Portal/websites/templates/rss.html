@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSS Feed - {{ GridName }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-dark text-white">
+
+    <!-- Header -->
+    <header class="bg-gradient py-3 text-center" style="background: linear-gradient(135deg, #ff6600 0%, #ff9933 100%);">
+        <h1 class="h3 fw-bold text-white mb-0">RSS Feed - {{ GridName }}</h1>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card bg-dark border-warning shadow-lg">
+                    <div class="card-body p-5">
+                        
+                        <h2 class="text-warning mb-4">Grid Status & News</h2>
+                        
+                        <div class="text-white">
+                            <p class="lead mb-4">Abonnieren Sie unseren RSS-Feed, um über den Grid-Status und Neuigkeiten informiert zu bleiben.</p>
+
+                            <!-- RSS Feed URL -->
+                            <div class="alert alert-info bg-dark border-info mb-4">
+                                <h5 class="text-info mb-3">🔗 RSS Feed URL:</h5>
+                                <code class="text-white bg-secondary p-2 d-block rounded">{{ LoginURI }}/rss</code>
+                            </div>
+
+                            <!-- Current Status -->
+                            <div class="card bg-secondary border-warning mb-4">
+                                <div class="card-header bg-warning text-dark">
+                                    <h5 class="mb-0">📡 Aktueller Grid-Status</h5>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="text-success mb-3">✅ Grid ist online</h6>
+                                    <p class="mb-2">{{ GridName }} ist online und verfügbar.</p>
+                                    <p class="mb-0">Aktuell sind <strong class="text-warning">{{ UsersInworld }}</strong> Nutzer online.</p>
+                                </div>
+                            </div>
+
+                            <!-- Statistics -->
+                            <div class="card bg-secondary border-warning mb-4">
+                                <div class="card-header bg-warning text-dark">
+                                    <h5 class="mb-0">📊 Grid-Statistiken</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-md-4">
+                                            <div class="text-center">
+                                                <h4 class="text-warning mb-1">{{ UsersInworld }}</h4>
+                                                <p class="text-white-50 small mb-0">Nutzer online</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="text-center">
+                                                <h4 class="text-warning mb-1">{{ RegionsTotal }}</h4>
+                                                <p class="text-white-50 small mb-0">Regionen verfügbar</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="text-center">
+                                                <h4 class="text-warning mb-1">{{ UsersTotal }}</h4>
+                                                <p class="text-white-50 small mb-0">Registrierte Nutzer</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Welcome Message -->
+                            <div class="card bg-secondary border-warning">
+                                <div class="card-header bg-warning text-dark">
+                                    <h5 class="mb-0">👋 Willkommen bei {{ GridName }}</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>Entdecken Sie unsere virtuelle Welt. Erstellen Sie einen kostenlosen Account und starten Sie Ihr Abenteuer!</p>
+                                    <a href="/register" class="btn btn-warning mt-2">Account erstellen</a>
+                                </div>
+                            </div>
+
+                            <!-- How to use RSS -->
+                            <div class="mt-5">
+                                <h5 class="text-warning mb-3">📖 RSS-Feed nutzen</h5>
+                                <ol class="text-light">
+                                    <li class="mb-2">Kopieren Sie die RSS-Feed-URL oben</li>
+                                    <li class="mb-2">Öffnen Sie Ihren RSS-Reader (z.B. Feedly, Inoreader, Thunderbird)</li>
+                                    <li class="mb-2">Fügen Sie die URL als neuen Feed hinzu</li>
+                                    <li class="mb-2">Sie erhalten nun automatisch Updates über den Grid-Status</li>
+                                </ol>
+                            </div>
+
+                        </div>
+
+                        <!-- Back Button -->
+                        <div class="text-center mt-5">
+                            <a href="/" class="btn btn-warning">← Zurück zur Startseite</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient py-3 text-center mt-4" style="background: linear-gradient(135deg, #ff6600 0%, #ff9933 100%);">
+        <p class="mb-0 text-white small">&copy; 2025 {{ GridName }}</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

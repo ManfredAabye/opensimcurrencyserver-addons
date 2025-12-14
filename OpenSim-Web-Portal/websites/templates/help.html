@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hilfe - {{ GridName }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="bg-dark text-white">
+
+    <!-- Header -->
+    <header class="bg-gradient py-3 text-center" style="background: linear-gradient(135deg, #ff6600 0%, #ff9933 100%);">
+        <h1 class="h3 fw-bold text-white mb-0">Hilfe & Support - {{ GridName }}</h1>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card bg-dark border-warning shadow-lg">
+                    <div class="card-body p-5">
+                        
+                        <h2 class="text-warning mb-4">Hilfe & Support</h2>
+                        
+                        <div class="text-white">
+                            <p class="lead mb-5">
+                                Willkommen auf der Hilfeseite von <strong>{{ GridName }}</strong>. 
+                                Hier finden Sie Informationen und Unterstützung für den Einstieg in unsere virtuelle Welt.
+                            </p>
+                        </div>
+
+                        <!-- Getting Started -->
+                        <div class="mb-5">
+                            <h3 class="text-warning mb-4">🚀 Erste Schritte</h3>
+                            <div class="card bg-secondary border-warning">
+                                <div class="card-body">
+                                    <ol class="mb-0 text-white">
+                                        <li class="mb-3"><strong>Viewer herunterladen:</strong> Laden Sie einen kompatiblen Viewer wie Firestorm, Singularity oder den offiziellen Second Life Viewer herunter.</li>
+                                        <li class="mb-3"><strong>Account erstellen:</strong> <a href="/register" class="text-warning">Erstellen Sie einen neuen Account</a> auf unserer Website.</li>
+                                        <li class="mb-3"><strong>Anmelden:</strong> Verwenden Sie Ihre Zugangsdaten im Viewer, um sich mit unserem Grid zu verbinden.</li>
+                                        <li class="mb-0"><strong>Erkunden:</strong> Besuchen Sie verschiedene Regionen und entdecken Sie unsere Welt!</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Viewer Downloads -->
+                        <div class="mb-5">
+                            <h3 class="text-warning mb-4">💻 Viewer Downloads</h3>
+                            <div class="row g-4">
+                                <div class="col-md-4">
+                                    <div class="card bg-secondary border-warning h-100">
+                                        <div class="card-body text-center">
+                                            <h4 class="text-warning mb-3">Firestorm</h4>
+                                            <p class="text-white-50 small mb-4">Der beliebteste Viewer mit vielen Funktionen.</p>
+                                            <a href="https://www.firestormviewer.org" target="_blank" class="btn btn-warning btn-sm">Download</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-secondary border-warning h-100">
+                                        <div class="card-body text-center">
+                                            <h4 class="text-warning mb-3">Singularity</h4>
+                                            <p class="text-white-50 small mb-4">Leichtgewichtiger und schneller Viewer.</p>
+                                            <a href="https://www.singularityviewer.org" target="_blank" class="btn btn-warning btn-sm">Download</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-secondary border-warning h-100">
+                                        <div class="card-body text-center">
+                                            <h4 class="text-warning mb-3">Second Life</h4>
+                                            <p class="text-white-50 small mb-4">Der offizielle Viewer von Linden Lab.</p>
+                                            <a href="https://secondlife.com/support/downloads" target="_blank" class="btn btn-warning btn-sm">Download</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Connection Info -->
+                        <div class="mb-5">
+                            <h3 class="text-warning mb-4">🔗 Verbindungsinformationen</h3>
+                            <div class="card bg-secondary border-warning">
+                                <div class="card-body">
+                                    <p class="text-white mb-2"><strong>Grid Name:</strong> {{ GridName }}</p>
+                                    <p class="text-white mb-0"><strong>Login URI:</strong> {{ LoginURI }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ -->
+                        <div class="mb-5">
+                            <h3 class="text-warning mb-4">❓ Häufig gestellte Fragen (FAQ)</h3>
+                            
+                            <div class="accordion accordion-flush" id="faqAccordion">
+                                <div class="accordion-item bg-secondary border-warning mb-2">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed bg-secondary text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                            Ich kann mich nicht anmelden. Was soll ich tun?
+                                        </button>
+                                    </h2>
+                                    <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body text-white">
+                                            Stellen Sie sicher, dass Sie die richtige Login URI in Ihrem Viewer eingegeben haben. 
+                                            Überprüfen Sie auch Ihre Zugangsdaten (Vorname, Nachname und Passwort).
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item bg-secondary border-warning mb-2">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed bg-secondary text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                            Wie erstelle ich meine eigene Region?
+                                        </button>
+                                    </h2>
+                                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body text-white">
+                                            Kontaktieren Sie die Grid-Administratoren für Informationen über das Hosting eigener Regionen.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item bg-secondary border-warning mb-2">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed bg-secondary text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                            Ich habe mein Passwort vergessen. Was nun?
+                                        </button>
+                                    </h2>
+                                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body text-white">
+                                            Besuchen Sie unsere <a href="/forgot-password" class="text-warning">Passwort-Wiederherstellungsseite</a> 
+                                            und folgen Sie den Anweisungen.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item bg-secondary border-warning mb-2">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed bg-secondary text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                            Ist die Nutzung kostenlos?
+                                        </button>
+                                    </h2>
+                                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body text-white">
+                                            Die Nutzung des Grids ist kostenlos. Für Details über Premium-Funktionen oder Region-Hosting 
+                                            kontaktieren Sie bitte die Administratoren.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Support Contact -->
+                        <div class="mb-5">
+                            <h3 class="text-warning mb-4">📧 Kontakt & Support</h3>
+                            <div class="card bg-secondary border-warning">
+                                <div class="card-body">
+                                    <p class="text-white mb-3">
+                                        Wenn Sie weitere Unterstützung benötigen, können Sie uns über folgende Kanäle kontaktieren:
+                                    </p>
+                                    <ul class="list-unstyled text-white mb-0">
+                                        <li class="mb-2">📧 <strong>Email:</strong> support@{{ GridName }}.com</li>
+                                        <li class="mb-2">💬 <strong>Inworld Support:</strong> Besuchen Sie unsere Support-Region</li>
+                                        <li class="mb-0">🌐 <strong>Website:</strong> <a href="/about" class="text-warning">Über uns</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Back Button -->
+                        <div class="text-center">
+                            <a href="/" class="btn btn-warning btn-lg">← Zurück zur Startseite</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient py-3 text-center mt-4" style="background: linear-gradient(135deg, #ff6600 0%, #ff9933 100%);">
+        <p class="mb-0 text-white small">&copy; 2025 {{ GridName }}</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

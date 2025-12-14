@@ -1,0 +1,244 @@
+<!-- Admin Console Page -->
+<div class="row mb-3">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="mb-0"><i class="bi bi-terminal"></i> OpenSim Konsole</h4>
+                <p class="text-muted mb-0">Führe Befehle direkt auf dem OpenSim Server aus</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                <h6 class="mb-0"><i class="bi bi-terminal-fill"></i> Console Output</h6>
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-light" onclick="clearConsole()">
+                        <i class="bi bi-x-circle"></i> Leeren
+                    </button>
+                    <button class="btn btn-light" onclick="toggleAutoScroll()">
+                        <i class="bi bi-arrow-down"></i> Auto-Scroll
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="console-output" id="consoleOutput">
+                    <span class="log-info">[CONSOLE]: OpenSim Web Portal Console v1.0</span>
+                    <span class="log-info">[CONSOLE]: Typ 'help' für verfügbare Befehle</span>
+                    <span class="log-info">[CONSOLE]: Ready.</span>
+                </div>
+            </div>
+            <div class="card-footer">
+                <form onsubmit="sendCommand(event)">
+                    <div class="input-group">
+                        <span class="input-group-text bg-dark text-white">
+                            <i class="bi bi-chevron-right"></i>
+                        </span>
+                        <input type="text" class="form-control console-input" id="commandInput" 
+                               placeholder="Befehl eingeben..." autocomplete="off" autofocus>
+                        <button class="btn btn-primary" type="submit">
+                            <i class="bi bi-send"></i> Senden
+                        </button>
+                    </div>
+                </form>
+                <div class="mt-2">
+                    <small class="text-muted">
+                        <i class="bi bi-info-circle"></i> 
+                        Häufige Befehle: <kbd>help</kbd> <kbd>show status</kbd> <kbd>show users</kbd> <kbd>show regions</kbd>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Commands -->
+<div class="row mt-3">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h6 class="mb-0"><i class="bi bi-lightning"></i> Schnellbefehle</h6>
+            </div>
+            <div class="card-body">
+                <div class="row g-2">
+                    <div class="col-md-3">
+                        <button class="btn btn-outline-primary w-100" onclick="quickCommand('help')">
+                            <i class="bi bi-question-circle"></i> Help
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-outline-success w-100" onclick="quickCommand('show status')">
+                            <i class="bi bi-info-circle"></i> Status
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-outline-info w-100" onclick="quickCommand('show users')">
+                            <i class="bi bi-people"></i> Users
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-outline-warning w-100" onclick="quickCommand('show regions')">
+                            <i class="bi bi-map"></i> Regions
+                        </button>
+                    </div>
+                </div>
+                <div class="row g-2 mt-2">
+                    <div class="col-md-3">
+                        <button class="btn btn-outline-secondary w-100" onclick="quickCommand('show threads')">
+                            <i class="bi bi-cpu"></i> Threads
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-outline-secondary w-100" onclick="quickCommand('stats')">
+                            <i class="bi bi-graph-up"></i> Stats
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-outline-secondary w-100" onclick="quickCommand('gc collect')">
+                            <i class="bi bi-trash"></i> GC Collect
+                        </button>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-outline-danger w-100" onclick="if(confirm('Server wirklich neustarten?')) quickCommand('shutdown')">
+                            <i class="bi bi-power"></i> Shutdown
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Command History -->
+<div class="row mt-3">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header">
+                <h6 class="mb-0"><i class="bi bi-clock-history"></i> Befehlsverlauf</h6>
+            </div>
+            <div class="card-body">
+                <div id="commandHistory" class="small">
+                    <span class="text-muted">Keine Befehle ausgeführt</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let commandHistoryArray = [];
+let historyIndex = -1;
+let autoScroll = true;
+
+function sendCommand(event) {
+    event.preventDefault();
+    
+    const input = document.getElementById('commandInput');
+    const command = input.value.trim();
+    
+    if (!command) return;
+    
+    // Add to history
+    commandHistoryArray.push(command);
+    historyIndex = commandHistoryArray.length;
+    updateCommandHistory();
+    
+    // Add command to output
+    appendToConsole('> ' + command, 'user-command');
+    
+    // Simulate command execution (später durch echten API-Call ersetzen)
+    setTimeout(() => {
+        executeCommand(command);
+    }, 100);
+    
+    // Clear input
+    input.value = '';
+}
+
+function executeCommand(command) {
+    // Simuliere Antworten
+    if (command === 'help') {
+        appendToConsole('[CONSOLE]: Verfügbare Befehle:', 'log-info');
+        appendToConsole('[CONSOLE]:   help           - Zeigt diese Hilfe', 'log-info');
+        appendToConsole('[CONSOLE]:   show status    - Zeigt Server-Status', 'log-info');
+        appendToConsole('[CONSOLE]:   show users     - Zeigt aktive Benutzer', 'log-info');
+        appendToConsole('[CONSOLE]:   show regions   - Zeigt Regionen', 'log-info');
+        appendToConsole('[CONSOLE]:   shutdown       - Stoppt den Server', 'log-warning');
+    } else if (command === 'show status') {
+        appendToConsole('[CONSOLE]: Server Status: Online', 'log-info');
+        appendToConsole('[CONSOLE]: Uptime: 2h 30m', 'log-info');
+        appendToConsole('[CONSOLE]: Users: 1 online', 'log-info');
+    } else if (command === 'show users') {
+        appendToConsole('[CONSOLE]: Aktive Benutzer:', 'log-info');
+        appendToConsole('[CONSOLE]:   Admin User (Admin Region)', 'log-info');
+    } else if (command === 'show regions') {
+        appendToConsole('[CONSOLE]: Regionen:', 'log-info');
+        appendToConsole('[CONSOLE]:   Admin Region (256x256) - Online', 'log-info');
+    } else {
+        appendToConsole('[CONSOLE]: Feature in Entwicklung - Befehl: ' + command, 'log-warning');
+    }
+}
+
+function appendToConsole(text, cssClass = '') {
+    const output = document.getElementById('consoleOutput');
+    const line = document.createElement('span');
+    line.textContent = text;
+    if (cssClass) line.className = cssClass;
+    output.appendChild(line);
+    
+    if (autoScroll) {
+        output.scrollTop = output.scrollHeight;
+    }
+}
+
+function clearConsole() {
+    document.getElementById('consoleOutput').innerHTML = `
+        <span class="log-info">[CONSOLE]: Console cleared</span>
+        <span class="log-info">[CONSOLE]: Ready.</span>
+    `;
+}
+
+function toggleAutoScroll() {
+    autoScroll = !autoScroll;
+    alert('Auto-Scroll: ' + (autoScroll ? 'An' : 'Aus'));
+}
+
+function quickCommand(command) {
+    document.getElementById('commandInput').value = command;
+    sendCommand(new Event('submit'));
+}
+
+function updateCommandHistory() {
+    const historyDiv = document.getElementById('commandHistory');
+    if (commandHistoryArray.length === 0) {
+        historyDiv.innerHTML = '<span class="text-muted">Keine Befehle ausgeführt</span>';
+    } else {
+        historyDiv.innerHTML = commandHistoryArray.slice(-10).reverse().map(cmd => 
+            `<span class="badge bg-secondary me-1 mb-1">${cmd}</span>`
+        ).join('');
+    }
+}
+
+// Command history navigation with arrow keys
+document.getElementById('commandInput').addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (historyIndex > 0) {
+            historyIndex--;
+            this.value = commandHistoryArray[historyIndex];
+        }
+    } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (historyIndex < commandHistoryArray.length - 1) {
+            historyIndex++;
+            this.value = commandHistoryArray[historyIndex];
+        } else {
+            historyIndex = commandHistoryArray.length;
+            this.value = '';
+        }
+    }
+});
+</script>

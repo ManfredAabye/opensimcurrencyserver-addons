@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+    <Project name="OpenSim.Web.Portal" path="addon-modules/OpenSim-Web-Portal/OpenSim.Web.Portal" type="Exe">
+      <Configuration name="Debug">
+        <Options>
+          <OutputPath>../../../bin/</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+        </Options>
+      </Configuration>
+      <Configuration name="Release">
+        <Options>
+          <OutputPath>../../../bin/</OutputPath>
+          <AllowUnsafe>true</AllowUnsafe>
+        </Options>
+      </Configuration>
+
+      <ReferencePath>../../../bin/</ReferencePath>
+      
+      <Reference name="Mono.Security.dll" path="../../../bin/"/>
+      <Reference name="Nini" path="../../../bin/"/>      
+      <Reference name="log4net" path="../../../bin/"/>
+      
+      <Reference name="OpenMetaverseTypes" path="../../../bin/"/>
+      <Reference name="OpenMetaverse.StructuredData" path="../../../bin/"/>
+      
+      <Reference name="OpenSim.Framework"/>
+      <Reference name="OpenSim.Framework.Console"/>
+      <Reference name="OpenSim.Framework.Servers"/>
+      <Reference name="OpenSim.Framework.Servers.HttpServer"/>
+      <Reference name="OpenSim.Server.Base"/>
+      <Reference name="OpenSim.Services.Interfaces"/>
+      <Reference name="OpenSim.Services.Base"/>
+      <Reference name="OpenSim.Services.UserAccountService"/>
+      <Reference name="OpenSim.Services.AuthenticationService"/>
+      <Reference name="OpenSim.Services.InventoryService"/>
+      <Reference name="OpenSim.Services.GridService"/>
+      <Reference name="OpenSim.Services.PresenceService"/>
+      <Reference name="OpenSim.Services.AvatarService"/>
+      <Reference name="OpenSim.Data"/>
+
+      <Files>
+        <Match pattern="*.cs" recurse="true">
+          <Exclude name="obj" pattern="obj"/>
+          <Exclude name="Tests" pattern="Tests"/>
+          <Exclude name="Properties" pattern="Properties"/>
+        </Match>
+        <!-- Copy HTML Templates to bin/portal/templates/ -->
+        <Match path="websites/templates/" pattern="*.html" destination="../../../bin/portal/templates/" recurse="false" buildAction="None" />
+        <!-- Copy XML Templates to bin/portal/templates/ -->
+        <Match path="websites/templates/" pattern="*.xml" destination="../../../bin/portal/templates/" recurse="false" buildAction="None" />
+        <!-- Copy CSS files to bin/portal/css/ -->
+        <Match path="websites/css/" pattern="*.css" destination="../../../bin/portal/css/" recurse="false" buildAction="None" />
+      </Files>
+    </Project>

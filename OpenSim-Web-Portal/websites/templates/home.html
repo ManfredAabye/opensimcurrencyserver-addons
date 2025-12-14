@@ -1,0 +1,188 @@
+<!-- Home Page Content -->
+<div class="row">
+    <!-- Welcome Card -->
+    <div class="col-12">
+        <div class="card shadow-sm mb-4">
+            <div class="card-body text-center py-5">
+                <h1 class="display-4"><i class="bi bi-globe text-primary"></i> Willkommen bei {{GRID_NAME}}</h1>
+                <p class="lead text-muted">Deine virtuelle Welt erwartet dich</p>
+                <hr class="my-4">
+                {{#IF_NOT_LOGGED_IN}}
+                <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                    <a href="/portal/register" class="btn btn-primary btn-lg">
+                        <i class="bi bi-person-plus"></i> Jetzt Registrieren
+                    </a>
+                    <a href="/portal/login" class="btn btn-outline-primary btn-lg">
+                        <i class="bi bi-box-arrow-in-right"></i> Anmelden
+                    </a>
+                </div>
+                {{ELSE}}
+                <p class="mb-0">Willkommen zurück, <strong>{{USER_NAME}}</strong>!</p>
+                {{/IF_NOT_LOGGED_IN}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-4">
+    <!-- Grid Statistics -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-primary text-white rounded p-3 me-3">
+                        <i class="bi bi-people fs-3"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-0">Benutzer</h5>
+                        <p class="text-muted mb-0">Registrierte Avatare</p>
+                    </div>
+                </div>
+                <h2 class="mb-0">{{TOTAL_USERS}}</h2>
+                <small class="text-success"><i class="bi bi-arrow-up"></i> {{ONLINE_USERS}} online</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Regions -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-success text-white rounded p-3 me-3">
+                        <i class="bi bi-map fs-3"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-0">Regionen</h5>
+                        <p class="text-muted mb-0">Verfügbare Welten</p>
+                    </div>
+                </div>
+                <h2 class="mb-0">{{TOTAL_REGIONS}}</h2>
+                <small class="text-success"><i class="bi bi-check-circle"></i> Alle online</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid Status -->
+    <div class="col-lg-4 col-md-6">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-info text-white rounded p-3 me-3">
+                        <i class="bi bi-activity fs-3"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title mb-0">Grid Status</h5>
+                        <p class="text-muted mb-0">System Health</p>
+                    </div>
+                </div>
+                <h2 class="mb-0 text-success"><i class="bi bi-check-circle-fill"></i> Online</h2>
+                <small class="text-muted">Uptime: {{UPTIME}}</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="row mt-5">
+    <div class="col-12">
+        <h2 class="text-center mb-4"><i class="bi bi-stars"></i> Features</h2>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card text-center h-100 shadow-sm hover-effect">
+            <div class="card-body">
+                <i class="bi bi-box fs-1 text-primary mb-3"></i>
+                <h5 class="card-title">Inventar-Verwaltung</h5>
+                <p class="card-text">Verwalte dein Inventar direkt über das Web-Portal</p>
+                <a href="/portal/inventory" class="btn btn-outline-primary btn-sm">Zum Inventar</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card text-center h-100 shadow-sm hover-effect">
+            <div class="card-body">
+                <i class="bi bi-person-badge fs-1 text-success mb-3"></i>
+                <h5 class="card-title">Account-Verwaltung</h5>
+                <p class="card-text">Bearbeite dein Profil und Einstellungen</p>
+                <a href="/portal/account" class="btn btn-outline-success btn-sm">Mein Account</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card text-center h-100 shadow-sm hover-effect">
+            <div class="card-body">
+                <i class="bi bi-terminal fs-1 text-info mb-3"></i>
+                <h5 class="card-title">Admin Konsole</h5>
+                <p class="card-text">Web-basierte Server-Verwaltung</p>
+                <a href="/portal/admin/console" class="btn btn-outline-info btn-sm">Zur Konsole</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-4">
+        <div class="card text-center h-100 shadow-sm hover-effect">
+            <div class="card-body">
+                <i class="bi bi-people fs-1 text-warning mb-3"></i>
+                <h5 class="card-title">Benutzerverwaltung</h5>
+                <p class="card-text">Verwalte alle Grid-Benutzer</p>
+                <a href="/portal/admin/users" class="btn btn-outline-warning btn-sm">Benutzer</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Getting Started -->
+{{#IF_NOT_LOGGED_IN}}
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card bg-light shadow-sm">
+            <div class="card-body">
+                <h3 class="card-title"><i class="bi bi-rocket-takeoff"></i> So startest du</h3>
+                <div class="row mt-4">
+                    <div class="col-md-4 mb-3">
+                        <div class="d-flex">
+                            <div class="bg-primary text-white rounded-circle p-3 me-3" style="width: 50px; height: 50px;">
+                                <span class="fs-5 fw-bold">1</span>
+                            </div>
+                            <div>
+                                <h5>Registrieren</h5>
+                                <p class="text-muted mb-0">Erstelle deinen kostenlosen Account</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="d-flex">
+                            <div class="bg-primary text-white rounded-circle p-3 me-3" style="width: 50px; height: 50px;">
+                                <span class="fs-5 fw-bold">2</span>
+                            </div>
+                            <div>
+                                <h5>Viewer Downloaden</h5>
+                                <p class="text-muted mb-0">Lade einen Viewer wie Firestorm herunter</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="d-flex">
+                            <div class="bg-primary text-white rounded-circle p-3 me-3" style="width: 50px; height: 50px;">
+                                <span class="fs-5 fw-bold">3</span>
+                            </div>
+                            <div>
+                                <h5>Los geht's</h5>
+                                <p class="text-muted mb-0">Verbinde dich und erkunde die Welt</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="/portal/register" class="btn btn-primary btn-lg">
+                        <i class="bi bi-person-plus"></i> Jetzt starten
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{/IF_NOT_LOGGED_IN}}

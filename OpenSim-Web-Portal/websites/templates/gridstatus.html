@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Status - {{ GridName }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <meta http-equiv="refresh" content="60">
+</head>
+<body class="bg-dark text-white">
+
+    <!-- Header -->
+    <header class="bg-gradient py-3 text-center" style="background: linear-gradient(135deg, #ff6600 0%, #ff9933 100%);">
+        <h1 class="h3 fw-bold text-white mb-0">Grid Status - {{ GridName }}</h1>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                
+                <!-- Status Overview -->
+                <div class="card bg-dark border-success shadow-lg mb-4">
+                    <div class="card-body p-5 text-center">
+                        <div class="mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" class="text-success" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-success display-4 mb-3">ONLINE</h2>
+                        <p class="text-white-50 lead mb-0">{{ GridName }} läuft normal</p>
+                        <p class="text-white-50 small mt-2">Letzte Aktualisierung: {{ CurrentDateTime }}</p>
+                    </div>
+                </div>
+
+                <!-- Statistics -->
+                <div class="card bg-dark border-warning shadow-lg mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="mb-0">📊 Aktuelle Statistiken</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-4">
+                            <div class="col-md-3 col-sm-6">
+                                <div class="text-center">
+                                    <div class="mb-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="text-warning" viewBox="0 0 16 16">
+                                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-warning display-6 mb-2">{{ UsersInworld }}</h3>
+                                    <p class="text-white-50 small mb-0">Nutzer online</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="text-center">
+                                    <div class="mb-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="text-warning" viewBox="0 0 16 16">
+                                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>
+                                            <path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V4z"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-warning display-6 mb-2">{{ RegionsTotal }}</h3>
+                                    <p class="text-white-50 small mb-0">Regionen</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="text-center">
+                                    <div class="mb-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="text-warning" viewBox="0 0 16 16">
+                                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                                            <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+                                            <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-warning display-6 mb-2">{{ UsersTotal }}</h3>
+                                    <p class="text-white-50 small mb-0">Registrierte Nutzer</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <div class="text-center">
+                                    <div class="mb-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="text-warning" viewBox="0 0 16 16">
+                                            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
+                                            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H2z"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="text-warning display-6 mb-2">{{ UsersActive }}</h3>
+                                    <p class="text-white-50 small mb-0">Aktive ({{ UsersActivePeriod }} Tage)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Services Status -->
+                <div class="card bg-dark border-warning shadow-lg mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="mb-0">⚙️ Dienste</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="list-group list-group-flush">
+                            <div class="list-group-item bg-dark border-secondary d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-white mb-1">Login Service</h6>
+                                    <p class="text-white-50 small mb-0">Authentifizierung und Anmeldung</p>
+                                </div>
+                                <span class="badge bg-success rounded-pill">Online</span>
+                            </div>
+                            <div class="list-group-item bg-dark border-secondary d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-white mb-1">Grid Service</h6>
+                                    <p class="text-white-50 small mb-0">Region-Verwaltung und Koordination</p>
+                                </div>
+                                <span class="badge bg-success rounded-pill">Online</span>
+                            </div>
+                            <div class="list-group-item bg-dark border-secondary d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-white mb-1">Asset Service</h6>
+                                    <p class="text-white-50 small mb-0">Inventar und Asset-Verwaltung</p>
+                                </div>
+                                <span class="badge bg-success rounded-pill">Online</span>
+                            </div>
+                            <div class="list-group-item bg-dark border-secondary d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-white mb-1">Economy Service</h6>
+                                    <p class="text-white-50 small mb-0">Währung und Transaktionen</p>
+                                </div>
+                                <span class="badge bg-success rounded-pill">Online</span>
+                            </div>
+                            <div class="list-group-item bg-dark border-secondary d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="text-white mb-1">Web Portal</h6>
+                                    <p class="text-white-50 small mb-0">Web-Interface und API</p>
+                                </div>
+                                <span class="badge bg-success rounded-pill">Online</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Information -->
+                <div class="card bg-dark border-warning shadow-lg mb-4">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="mb-0">ℹ️ System-Informationen</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row text-white">
+                            <div class="col-md-6 mb-3">
+                                <p class="mb-1"><strong>Grid Name:</strong></p>
+                                <p class="text-white-50 mb-0">{{ GridName }}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <p class="mb-1"><strong>Login URI:</strong></p>
+                                <p class="text-white-50 mb-0">{{ LoginURI }}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <p class="mb-1"><strong>Version:</strong></p>
+                                <p class="text-white-50 mb-0">OpenSimulator {{ Version }}</p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <p class="mb-1"><strong>Uptime:</strong></p>
+                                <p class="text-white-50 mb-0">{{ Uptime }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RSS Feed Link -->
+                <div class="card bg-dark border-info shadow-lg">
+                    <div class="card-body text-center p-4">
+                        <p class="text-white mb-3">Abonnieren Sie unseren Status-Feed für automatische Updates</p>
+                        <a href="/gridstatusrss" class="btn btn-warning">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-rss me-2" viewBox="0 0 16 16">
+                                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+                                <path d="M5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-3-8.5a1 1 0 0 1 1-1c5.523 0 10 4.477 10 10a1 1 0 1 1-2 0 8 8 0 0 0-8-8 1 1 0 0 1-1-1zm0 4a1 1 0 0 1 1-1 6 6 0 0 1 6 6 1 1 0 1 1-2 0 4 4 0 0 0-4-4 1 1 0 0 1-1-1z"/>
+                            </svg>
+                            RSS Feed abonnieren
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Auto-Refresh Notice -->
+                <div class="text-center mt-4">
+                    <p class="text-white-50 small">Diese Seite aktualisiert sich automatisch alle 60 Sekunden</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient py-3 text-center mt-4" style="background: linear-gradient(135deg, #ff6600 0%, #ff9933 100%);">
+        <p class="mb-0 text-white small">&copy; 2025 {{ GridName }}</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
