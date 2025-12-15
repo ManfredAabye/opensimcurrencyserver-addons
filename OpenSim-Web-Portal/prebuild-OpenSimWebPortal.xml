@@ -21,6 +21,7 @@
       
       <Reference name="OpenMetaverseTypes" path="../../../bin/"/>
       <Reference name="OpenMetaverse.StructuredData" path="../../../bin/"/>
+      <Reference name="MySql.Data" path="../../../bin/"/>
       
       <Reference name="OpenSim.Framework"/>
       <Reference name="OpenSim.Framework.Console"/>
@@ -43,11 +44,18 @@
           <Exclude name="Tests" pattern="Tests"/>
           <Exclude name="Properties" pattern="Properties"/>
         </Match>
+        
+        <!-- Copy Configuration Files to bin/ -->
+        <Match pattern="WebPortal.ini.example" buildAction="Content" copyToOutput="Always" />
+        <Match pattern="WebPortal.log4net" buildAction="Content" copyToOutput="Always" />
+        
         <!-- Copy HTML Templates to bin/portal/templates/ -->
-        <Match path="websites/templates/" pattern="*.html" destination="../../../bin/portal/templates/" recurse="false" buildAction="None" />
-        <!-- Copy XML Templates to bin/portal/templates/ -->
-        <Match path="websites/templates/" pattern="*.xml" destination="../../../bin/portal/templates/" recurse="false" buildAction="None" />
+        <Match path="../websites/templates/" pattern="*.html" destination="../../../bin/portal/templates/" recurse="false" buildAction="None" />
+        
+        <!-- Copy XML Templates (RSS Feeds) to bin/portal/templates/ -->
+        <Match path="../websites/templates/" pattern="*.xml" destination="../../../bin/portal/templates/" recurse="false" buildAction="None" />
+        
         <!-- Copy CSS files to bin/portal/css/ -->
-        <Match path="websites/css/" pattern="*.css" destination="../../../bin/portal/css/" recurse="false" buildAction="None" />
+        <Match path="../websites/css/" pattern="*.css" destination="../../../bin/portal/css/" recurse="false" buildAction="None" />
       </Files>
     </Project>

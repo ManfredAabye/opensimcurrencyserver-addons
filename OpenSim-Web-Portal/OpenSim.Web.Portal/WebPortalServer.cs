@@ -36,6 +36,7 @@ using OpenSim.Framework.Console;
 using OpenSim.Framework.Servers;
 using OpenSim.Framework.Servers.HttpServer;
 using OpenSim.Server.Base;
+using OpenSim.Services.Interfaces;
 
 namespace OpenSim.Web.Portal.Handlers
 {
@@ -68,20 +69,26 @@ namespace OpenSim.Web.Portal.Handlers
                 string content = File.ReadAllText(homeFile);
                 
                 // Simple template replacement
-                html = layout.Replace("{{GRID_NAME}}", "OpenSim Web Portal")
+                html = layout.Replace("{{GRID_NAME}}", "OpenSim Grid")
                             .Replace("{{CONTENT}}", content)
                             .Replace("{{#IF_NOT_LOGGED_IN}}", "")
                             .Replace("{{/IF_NOT_LOGGED_IN}}", "")
                             .Replace("{{ELSE}}", "<!--")
+                            .Replace("{{#IF_LOGGED_IN}}", "<!--")
                             .Replace("{{/IF_LOGGED_IN}}", "-->")
+                            .Replace("{{#IF_ADMIN}}", "<!--")
+                            .Replace("{{/IF_ADMIN}}", "-->")
                             .Replace("{{HEAD_EXTRA}}", "")
                             .Replace("{{SCRIPT_EXTRA}}", "")
                             .Replace("{{#ALERTS}}", "<!--")
                             .Replace("{{/ALERTS}}", "-->")
+                            .Replace("{{USER_NAME}}", "")
                             .Replace("{{TOTAL_USERS}}", "0")
                             .Replace("{{ONLINE_USERS}}", "0")
                             .Replace("{{TOTAL_REGIONS}}", "0")
-                            .Replace("{{UPTIME}}", "Just started");
+                            .Replace("{{UPTIME}}", "Just started")
+                            .Replace("{{LOGIN_URI}}", "http://localhost:8002")
+                            .Replace("{{ LoginURI }}", "http://localhost:8002");
             }
             else
             {
@@ -240,8 +247,8 @@ namespace OpenSim.Web.Portal.Handlers
                 if (isXmlFile)
                 {
                     // Replace placeholders
-                    pageContent = pageContent.Replace("{{ GridName }}", "OpenSim Web Portal");
-                    pageContent = pageContent.Replace("{{ LoginURI }}", "http://localhost:9000");
+                    pageContent = pageContent.Replace("{{ GridName }}", "OpenSim Grid");
+                    pageContent = pageContent.Replace("{{ LoginURI }}", "http://localhost:8002");
                     pageContent = pageContent.Replace("{{ CurrentDateTime }}", DateTime.Now.ToString("R")); // RFC1123
                     pageContent = pageContent.Replace("{{ Timestamp }}", DateTime.Now.Ticks.ToString());
                     pageContent = pageContent.Replace("{{ UsersInworld }}", "0");
@@ -266,33 +273,48 @@ namespace OpenSim.Web.Portal.Handlers
                 }
                 else
                 {
-                    // No layout, return page content directly
+                    // No layout, return page content directly (standalone HTML pages like tos.html)
                     html = pageContent;
                 }
 
-                // Replace common placeholders with default values
-                html = html.Replace("{{ GridName }}", "OpenSim Web Portal");
+                // Replace common placeholders with default values (works for both layout and standalone pages)
+                html = html.Replace("{{ GridName }}", "OpenSim Grid");
+                html = html.Replace("{{GridName}}", "OpenSim Grid");
                 html = html.Replace("{{ UsersInworld }}", "0");
                 html = html.Replace("{{ RegionsTotal }}", "0");
                 html = html.Replace("{{ UsersTotal }}", "0");
                 html = html.Replace("{{ UsersActive }}", "0");
                 html = html.Replace("{{ UsersActivePeriod }}", "30");
-                html = html.Replace("{{ LoginURI }}", "http://localhost:9000");
+                html = html.Replace("{{ LoginURI }}", "http://localhost:8002");
                 html = html.Replace("{{ CurrentDateTime }}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
                 html = html.Replace("{{ Version }}", "0.9.3");
                 html = html.Replace("{{ Uptime }}", "Just started");
                 html = html.Replace("{{ StartingBalance }}", "1000");
                 html = html.Replace("{{ UserBalance }}", "0");
                 html = html.Replace("{{ SearchQuery }}", "");
-                html = html.Replace("{{GRID_NAME}}", "OpenSim Web Portal");
+                html = html.Replace("{{GRID_NAME}}", "OpenSim Grid");
                 html = html.Replace("{{USER_FIRSTNAME}}", "Guest");
                 html = html.Replace("{{USER_LASTNAME}}", "User");
+                html = html.Replace("{{USER_NAME}}", "");
                 html = html.Replace("{{USER_EMAIL}}", "guest@example.com");
                 html = html.Replace("{{USER_UUID}}", "00000000-0000-0000-0000-000000000000");
                 html = html.Replace("{{USER_LEVEL}}", "0");
                 html = html.Replace("{{CREATED_DATE}}", "2025-01-01");
                 html = html.Replace("{{LAST_LOGIN}}", "Noch nie");
-                html = html.Replace("{{LOGIN_URI}}", "http://localhost:9000");
+                html = html.Replace("{{LOGIN_URI}}", "http://localhost:8002");
+                html = html.Replace("{{HEAD_EXTRA}}", "");
+                html = html.Replace("{{SCRIPT_EXTRA}}", "");
+                
+                // Hide logged-in sections for non-authenticated users
+                html = html.Replace("{{#IF_NOT_LOGGED_IN}}", "");
+                html = html.Replace("{{/IF_NOT_LOGGED_IN}}", "");
+                html = html.Replace("{{ELSE}}", "<!--");
+                html = html.Replace("{{#IF_LOGGED_IN}}", "<!--");
+                html = html.Replace("{{/IF_LOGGED_IN}}", "-->");
+                html = html.Replace("{{#IF_ADMIN}}", "<!--");
+                html = html.Replace("{{/IF_ADMIN}}", "-->");
+                html = html.Replace("{{#ALERTS}}", "<!--");
+                html = html.Replace("{{/ALERTS}}", "-->");
 
                 return Encoding.UTF8.GetBytes(html);
             }
@@ -321,6 +343,11 @@ namespace OpenSim.Web.Portal
         private string m_cssPath;
         private volatile bool m_isRunning = true;
         
+        // Authentication and user management services
+        private AuthenticationService m_authService;
+        private IUserAccountService m_userAccountService;
+        private IAuthenticationService m_opensimAuthService;
+        
         /// <summary>
         /// Constructor - initializes the console for the server
         /// </summary>
@@ -343,6 +370,7 @@ namespace OpenSim.Web.Portal
             {
                 ReadConfiguration();
                 SetupPaths();
+                InitializeServices();
                 SetupHttpServer();
                 RegisterConsoleCommands();
                 
@@ -369,30 +397,55 @@ namespace OpenSim.Web.Portal
         {
             string iniFile = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WebPortal.ini");
             
+            m_log.InfoFormat("[WEB PORTAL]: Looking for configuration at: {0}", iniFile);
+            
             if (File.Exists(iniFile))
             {
                 try
                 {
-                    IConfigSource config = new IniConfigSource(iniFile);
-                    IConfig serverConfig = config.Configs["WebPortal"];
+                    m_log.InfoFormat("[WEB PORTAL]: Loading configuration from {0}", iniFile);
+                    
+                    // Load configuration into Config property (inherited from BaseOpenSimServer)
+                    Config = new IniConfigSource(iniFile);
+                    
+                    IConfig serverConfig = Config.Configs["WebPortal"];
                     
                     if (serverConfig != null)
                     {
-                        m_port = (uint)serverConfig.GetInt("Port", 9000);
-                        m_log.InfoFormat("[WEB PORTAL]: Configuration loaded from {0}", iniFile);
+                        m_port = (uint)serverConfig.GetInt("Port", 8100);
+                        m_log.InfoFormat("[WEB PORTAL]: Configuration loaded successfully");
                         m_log.InfoFormat("[WEB PORTAL]: Port set to {0}", m_port);
+                    }
+                    else
+                    {
+                        m_log.Warn("[WEB PORTAL]: [WebPortal] section not found in configuration");
+                    }
+                    
+                    // Log all available sections
+                    m_log.InfoFormat("[WEB PORTAL]: Configuration sections loaded: {0}", Config.Configs.Count);
+                    foreach (IConfig cfg in Config.Configs)
+                    {
+                        m_log.InfoFormat("[WEB PORTAL]:   - {0}", cfg.Name);
                     }
                 }
                 catch (Exception e)
                 {
                     m_log.ErrorFormat("[WEB PORTAL]: Error reading configuration: {0}", e.Message);
-                    m_log.Info("[WEB PORTAL]: Using default settings");
+                    m_log.ErrorFormat("[WEB PORTAL]: Stack trace: {0}", e.StackTrace);
+                    m_log.Error("[WEB PORTAL]: Using default settings");
+                    
+                    // Initialize empty config to prevent null reference
+                    Config = new IniConfigSource();
                 }
             }
             else
             {
-                m_log.InfoFormat("[WEB PORTAL]: No configuration file found at {0}", iniFile);
-                m_log.Info("[WEB PORTAL]: Using default port 9000");
+                m_log.ErrorFormat("[WEB PORTAL]: Configuration file NOT FOUND at {0}", iniFile);
+                m_log.Error("[WEB PORTAL]: Please create WebPortal.ini with database configuration!");
+                m_log.Info("[WEB PORTAL]: Using default port 8100");
+                
+                // Initialize empty config to prevent null reference
+                Config = new IniConfigSource();
             }
         }
 
@@ -425,6 +478,123 @@ namespace OpenSim.Web.Portal
         }
 
         /// <summary>
+        /// Initialize authentication and user management services
+        /// </summary>
+        private void InitializeServices()
+        {
+            m_log.Info("[WEB PORTAL]: Initializing services...");
+            
+            try
+            {
+                // Check if we have configuration loaded
+                if (Config == null || Config.Configs.Count == 0)
+                {
+                    m_log.Error("[WEB PORTAL]: No configuration loaded! Services cannot be initialized.");
+                    m_log.Error("[WEB PORTAL]: Please ensure WebPortal.ini exists and is properly configured.");
+                    return;
+                }
+
+                // Log available config sections
+                m_log.InfoFormat("[WEB PORTAL]: Configuration loaded with {0} sections", Config.Configs.Count);
+                foreach (var configName in Config.Configs)
+                {
+                    m_log.DebugFormat("[WEB PORTAL]: Config section: {0}", configName);
+                }
+                
+                // Load UserAccountService
+                try
+                {
+                    var userConfig = Config.Configs["UserAccountService"];
+                    if (userConfig != null)
+                    {
+                        string dll = userConfig.GetString("LocalServiceModule", "OpenSim.Services.UserAccountService.dll:UserAccountService");
+                        string[] parts = dll.Split(':');
+                        string dllName = parts[0];
+                        string className = parts.Length > 1 ? parts[1] : "UserAccountService";
+                        
+                        m_log.InfoFormat("[WEB PORTAL]: Loading UserAccountService from {0}:{1}", dllName, className);
+                        
+                        object[] args = new object[] { Config };
+                        m_userAccountService = ServerUtils.LoadPlugin<IUserAccountService>(dll, args);
+                        
+                        if (m_userAccountService != null)
+                        {
+                            m_log.Info("[WEB PORTAL]: UserAccountService loaded successfully");
+                        }
+                        else
+                        {
+                            m_log.Error("[WEB PORTAL]: UserAccountService returned null");
+                        }
+                    }
+                    else
+                    {
+                        m_log.Error("[WEB PORTAL]: [UserAccountService] section not found in configuration");
+                        m_log.Error("[WEB PORTAL]: Please add [UserAccountService] section to WebPortal.ini");
+                    }
+                }
+                catch (Exception e)
+                {
+                    m_log.ErrorFormat("[WEB PORTAL]: Could not load UserAccountService: {0}", e.Message);
+                    m_log.ErrorFormat("[WEB PORTAL]: Stack trace: {0}", e.StackTrace);
+                    m_log.Error("[WEB PORTAL]: User authentication will not be available");
+                }
+                
+                // Load AuthenticationService
+                try
+                {
+                    var authConfig = Config.Configs["AuthenticationService"];
+                    if (authConfig != null)
+                    {
+                        string dll = authConfig.GetString("LocalServiceModule", "OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService");
+                        
+                        m_log.InfoFormat("[WEB PORTAL]: Loading AuthenticationService from {0}", dll);
+                        
+                        object[] args = new object[] { Config };
+                        m_opensimAuthService = ServerUtils.LoadPlugin<IAuthenticationService>(dll, args);
+                        
+                        if (m_opensimAuthService != null)
+                        {
+                            m_log.Info("[WEB PORTAL]: AuthenticationService loaded successfully");
+                        }
+                        else
+                        {
+                            m_log.Error("[WEB PORTAL]: AuthenticationService returned null");
+                        }
+                    }
+                    else
+                    {
+                        m_log.Error("[WEB PORTAL]: [AuthenticationService] section not found in configuration");
+                        m_log.Error("[WEB PORTAL]: Please add [AuthenticationService] section to WebPortal.ini");
+                    }
+                }
+                catch (Exception e)
+                {
+                    m_log.ErrorFormat("[WEB PORTAL]: Could not load AuthenticationService: {0}", e.Message);
+                    m_log.ErrorFormat("[WEB PORTAL]: Stack trace: {0}", e.StackTrace);
+                    m_log.Error("[WEB PORTAL]: Password verification will not be available");
+                }
+                
+                // Initialize our authentication service wrapper
+                m_authService = new AuthenticationService(m_userAccountService, m_opensimAuthService);
+                
+                // Initialize session manager with 30 minute timeout
+                SessionManager.Initialize(30);
+                m_log.Info("[WEB PORTAL]: Session manager initialized (30 minute timeout)");
+                
+                // Log final service status
+                m_log.InfoFormat("[WEB PORTAL]: Service initialization complete");
+                m_log.InfoFormat("[WEB PORTAL]:   - UserAccountService: {0}", m_userAccountService != null ? "Available" : "NOT AVAILABLE");
+                m_log.InfoFormat("[WEB PORTAL]:   - AuthenticationService: {0}", m_opensimAuthService != null ? "Available" : "NOT AVAILABLE");
+            }
+            catch (Exception e)
+            {
+                m_log.ErrorFormat("[WEB PORTAL]: Error initializing services: {0}", e.Message);
+                m_log.ErrorFormat("[WEB PORTAL]: Stack trace: {0}", e.StackTrace);
+                m_log.Error("[WEB PORTAL]: Some features may not be available");
+            }
+        }
+
+        /// <summary>
         /// Setup the HTTP server and register handlers
         /// </summary>
         private void SetupHttpServer()
@@ -438,23 +608,36 @@ namespace OpenSim.Web.Portal
             m_httpServer.AddStreamHandler(new Handlers.PortalApiHandler(m_startTime));
             m_httpServer.AddStreamHandler(new Handlers.PortalCssHandler(m_cssPath));
             
-            // Register page handlers
+            // Register authentication handlers (POST)
+            m_httpServer.AddStreamHandler(new Handlers.LoginHandler(m_authService, m_templatePath));
+            m_httpServer.AddStreamHandler(new Handlers.LogoutHandler());
+            m_httpServer.AddStreamHandler(new Handlers.RegisterHandler(m_authService));
+            
+            // Register public page handlers (GET)
             m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "login", "/portal/login"));
             m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "register", "/portal/register"));
-            m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "account", "/portal/account"));
-            m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "inventory", "/portal/inventory"));
             m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "forgot-password", "/portal/forgot-password"));
             m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "about", "/portal/about"));
-            m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "admin-users", "/portal/admin/users"));
-            m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "admin-console", "/portal/admin/console"));
+            
+            // Register protected page handlers (require authentication)
+            m_httpServer.AddStreamHandler(new Handlers.AccountPageHandler(m_templatePath));
+            m_httpServer.AddStreamHandler(new Handlers.InventoryPageHandler(m_templatePath));
+            m_httpServer.AddStreamHandler(new Handlers.PasswordPageHandler(m_templatePath, m_authService));
+            
+            // Admin pages (require authentication + admin level >= 200)
+            m_httpServer.AddStreamHandler(new Handlers.AdminUsersPageHandler(m_templatePath));
+            m_httpServer.AddStreamHandler(new Handlers.AdminConsolePageHandler(m_templatePath));
             
             // Firestorm Viewer / Grid-Manager Seiten
             m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "welcome", "/welcome"));
             m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "splash", "/splash"));
             m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "guide", "/guide"));
             m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "tos", "/tos"));
+            m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "tos", "/portal/tos"));
             m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "termsofservice", "/termsofservice"));
+            m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "termsofservice", "/portal/termsofservice"));
             m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "help", "/help"));
+            m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "help", "/portal/help"));
             m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "economy", "/economy"));
             m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "password", "/password"));
             m_httpServer.AddStreamHandler(new Handlers.PortalPageHandler(m_templatePath, "gridstatus", "/gridstatus"));
@@ -472,10 +655,17 @@ namespace OpenSim.Web.Portal
             m_log.Info("[WEB PORTAL]:   GET  /                        - Home Page");
             m_log.Info("[WEB PORTAL]:   GET  /api/message             - REST API");
             m_log.Info("[WEB PORTAL]:   GET  /portal/css/*            - CSS Files");
+            m_log.Info("[WEB PORTAL]: Authentication:");
             m_log.Info("[WEB PORTAL]:   GET  /portal/login            - Login Page");
+            m_log.Info("[WEB PORTAL]:   POST /portal/login            - Login Handler");
+            m_log.Info("[WEB PORTAL]:   GET  /portal/logout           - Logout Handler");
             m_log.Info("[WEB PORTAL]:   GET  /portal/register         - Registration Page");
+            m_log.Info("[WEB PORTAL]:   POST /portal/register         - Registration Handler");
+            m_log.Info("[WEB PORTAL]: Protected Pages (require login):");
             m_log.Info("[WEB PORTAL]:   GET  /portal/account          - Account Management");
             m_log.Info("[WEB PORTAL]:   GET  /portal/inventory        - Inventory Browser");
+            m_log.Info("[WEB PORTAL]:   GET  /password                - Password Change");
+            m_log.Info("[WEB PORTAL]: Public Pages:");
             m_log.Info("[WEB PORTAL]:   GET  /portal/forgot-password  - Password Recovery");
             m_log.Info("[WEB PORTAL]:   GET  /portal/about            - About Page");
             m_log.Info("[WEB PORTAL]:   GET  /portal/admin/users      - Admin: User Management");

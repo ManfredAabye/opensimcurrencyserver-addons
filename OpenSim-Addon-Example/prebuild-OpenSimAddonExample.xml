@@ -18,6 +18,7 @@
       <Reference name="Mono.Security.dll" path="../../../bin/"/>
       <Reference name="Nini" path="../../../bin/"/>      
       <Reference name="log4net" path="../../../bin/"/>
+      <Reference name="MySql.Data" path="../../../bin/"/>
       
       <Reference name="OpenMetaverseTypes" path="../../../bin/"/>
       <Reference name="OpenMetaverse.StructuredData" path="../../../bin/"/>

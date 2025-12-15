@@ -21,9 +21,23 @@
     ; Login URI für Viewer-Verbindungen
     ; LoginURI = http://localhost:8002
 
-; [Database]
-    ; Datenbankverbindung (für zukünftige Features)
-    ; ConnectionString = "Data Source=localhost;Database=opensim;User ID=opensim;Password=***;"
+[DatabaseService]
+    ; Datenbankverbindung - MUSS konfiguriert werden für Benutzer-Authentifizierung
+    ; Verwenden Sie die gleichen Einstellungen wie in Robust.ini [DatabaseService]
+    StorageProvider = "OpenSim.Data.MySQL.dll"
+    ConnectionString = "Data Source=localhost;Database=opensim;User ID=opensim;Password=opensim;Old Guids=true;"
+
+[UserAccountService]
+    ; User Account Service Konfiguration
+    LocalServiceModule = "OpenSim.Services.UserAccountService.dll:UserAccountService"
+    StorageProvider = "OpenSim.Data.MySQL.dll"
+    ConnectionString = "Data Source=localhost;Database=opensim;User ID=opensim;Password=opensim;Old Guids=true;"
+
+[AuthenticationService]
+    ; Authentication Service Konfiguration
+    LocalServiceModule = "OpenSim.Services.AuthenticationService.dll:PasswordAuthenticationService"
+    StorageProvider = "OpenSim.Data.MySQL.dll"
+    ConnectionString = "Data Source=localhost;Database=opensim;User ID=opensim;Password=opensim;Old Guids=true;"
 
 ; [Email]
     ; E-Mail Konfiguration für Passwort-Reset (zukünftig)
